@@ -1,8 +1,14 @@
+/* VARIABLES SCSS */
+$body-bg: #0e2131 !default;
+
+
 /* IMPORTS */
+@import "../../node_modules/bootswatch/dist/superhero/variables";
 @import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootswatch/dist/superhero/bootswatch";
 
 
 /* SCSS */
-body {
+/* body {
     background-color: lightgray;
-}
+} */

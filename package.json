@@ -20,5 +20,8 @@
     },
     "browserslist": [
         "defaults"
-    ]
+    ],
+    "dependencies": {
+        "bootswatch": "^5.1.3"
+    }
 }

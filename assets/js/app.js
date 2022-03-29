@@ -8,5 +8,5 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import '../styles/app.scss';
 
-// Chargement de la partieJS de bootstrap
+// Chargement de la partie JS de bootstrap
 require('bootstrap');

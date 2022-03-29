@@ -20,6 +20,7 @@ npm install (voir Webpack Encore)
  npm install sass-loader@^12.0.0 sass --save-dev
  npm install postcss-loader@^6.0.0 --save-dev
  npm install autoprefixer --save-dev
- npm i bootstrap
+ npm install bootstrap --save-dev
+ npm install bootswatch
 ```
 
