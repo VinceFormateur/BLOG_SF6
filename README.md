@@ -10,5 +10,6 @@ git clone https://github.com/VinceFormateur/BLOG_WF3.git
 ## Installation
 ```
 composer install
+symfony console doctrine:database:create
 ```
 
