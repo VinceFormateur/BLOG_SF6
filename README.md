@@ -22,5 +22,6 @@ npm install (voir Webpack Encore)
  npm install autoprefixer --save-dev
  npm install bootstrap --save-dev
  npm install bootswatch
+ npm install jquery
 ```
 
