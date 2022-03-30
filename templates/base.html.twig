@@ -1,23 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
 
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <title>Mon BLOG - {% block title %}{% endblock %}</title>
+
+    {# BLOCK CSS #}
     {% block stylesheets %}
-{#          {{ encore_entry_link_tags('app') }} #}
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
+    {# BLOCK JS #}
     {% block javascripts %}
-{#         {{ encore_entry_script_tags('app') }} #}
+        {{ encore_entry_script_tags('app') }}
     {% endblock %}
+
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
 
-    {% block body %}{% endblock %}
+    {# HEADER #}
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+
+          <a class="navbar-brand" href="{{ path('app_home') }}">Blog <i class="fa-solid fa-blog"></i> WF3</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+
+            {# Menu de Gauche #}
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+{#               <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li> #}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+              </li>
+            </ul>
+
+            {# Menu de Droite #}
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Connexion <i class="fas fa-sign-in-alt"></i></a>
+              </li>
+            </ul>            
+
+            {# Formulaire de recherche #}
+{#             <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Recherche</button>
+            </form> #}
+
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    {# MAIN #}
+    <main class="container-fluid flex-shrink-0">
         
+        {# BLOCK PRINCIPAL #}
+        {% block body %}{% endblock %}
+
+    </main>        
+
+    {# FOOTER #}
+    <footer class="footer mt-auto py-2 bg-dark">
+      <div class="container">
+        <span class="text-muted">Ceci est le footer</span>
+      </div>
+    </footer>
+
 </body>
 
 </html>

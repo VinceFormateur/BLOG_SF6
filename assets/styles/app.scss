@@ -1,0 +1,16 @@
+/* VARIABLES SCSS */
+$body-bg: #0e2131 !default;
+
+
+/* IMPORTS */
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "../../node_modules/bootswatch/dist/superhero/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootswatch/dist/superhero/bootswatch";
+
+
+/* MON SCSS */
+main {
+  padding: 60px 10px 0;
+}
+
