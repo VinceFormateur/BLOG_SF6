@@ -11,6 +11,8 @@ git clone https://github.com/VinceFormateur/BLOG_WF3.git
 ```
 composer install
 symfony console doctrine:database:create
+symfony console make:migration
+symfony console doctrine:migrations:migrate
 composer require symfony/webpack-encore-bundle
 npm install (pour la partie Webpack Encore)
 ```
