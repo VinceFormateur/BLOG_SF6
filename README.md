@@ -23,5 +23,6 @@ npm install (voir Webpack Encore)
  npm install bootstrap --save-dev
  npm install bootswatch
  npm install jquery
+ npm install --save @fortawesome/fontawesome-free
 ```
 
