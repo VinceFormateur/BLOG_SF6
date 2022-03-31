@@ -67,6 +67,19 @@
     {# MAIN #}
     <main class="container-fluid flex-shrink-0">
         
+
+        {# Container pour les messages flash #}
+        <div id="messages" class="container-fluid p-0 m-0">
+          <div class="row p-0 m-0">
+            {% for label, messages in app.flashes %}
+              {% for message in messages %}
+                 <div class="alert alert-{{ label }} col-12" role="alert">{{ message }}</div>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+
+
         {# BLOCK PRINCIPAL #}
         {% block body %}{% endblock %}
 
