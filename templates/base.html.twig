@@ -35,9 +35,9 @@
 
             {# Menu de Gauche #}
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-{#               <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
-              </li> #}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_main_blog') }}">Blog</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_main_contact') }}">Contact</a>
               </li>
@@ -68,7 +68,7 @@
     <main class="container-fluid flex-shrink-0">
         
       {# Container pour les messages flash #}
-      <div id="messages" class="container p-0 m-0 mx-auto">
+      <div id="messages" class="container-md p-0 m-0 mx-auto">
         <div class="row p-0 m-0">
           {% for label, messages in app.flashes %}
             {% for message in messages %}
