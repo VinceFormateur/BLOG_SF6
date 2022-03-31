@@ -20,4 +20,11 @@ require('@fortawesome/fontawesome-free/js/all.js');
 // MON JS
 $(document).ready(function() {
 
+    // Rend temporaire les div alerts (messages)
+    if ($('div.alert')) {
+        $('div.alert').delay(4000).fadeOut(350, function() {
+            $('div.alert').remove();
+        });
+    }
+
 });

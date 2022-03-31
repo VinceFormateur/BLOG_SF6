@@ -14,3 +14,17 @@ main {
   padding: 60px 10px 0;
 }
 
+/*--------------------  MESSAGES D'ALERTES --------------------*/
+
+#messages {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    top: 62px;
+    right: 0;
+    left: 0;
+    z-index: 1020;
+    opacity: 0.80;
+}
+
