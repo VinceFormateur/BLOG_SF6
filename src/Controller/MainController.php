@@ -2,17 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
-use App\Entity\User;
-use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+// Import Login
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
-
-use Doctrine\ORM\EntityManagerInterface;
+// Imports Register
+use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Form\RegistrationFormType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -36,6 +35,7 @@ class MainController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
+            $this->addFlash('warning', 'Vous êtes déjà connecté');            
             return $this->redirectToRoute('app_main_home');
         }
 
@@ -44,7 +44,7 @@ class MainController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('main/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/deconnexion', name: 'logout')]
@@ -54,8 +54,13 @@ class MainController extends AbstractController
     }
 
     #[Route('/inscription', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
+        if ($this->getUser()) {
+            $this->addFlash('warning', 'Vous êtes déjà inscrit');
+            return $this->redirectToRoute('app_main_home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -63,21 +68,22 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
+                $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
             );
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userRepository->add($user);
+            $this->addFlash('success', 'Vous êtes bien inscrit');
+
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_main_login');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->renderForm('main/register.html.twig', [
+            'registrationForm' => $form,
         ]);
     }
 
