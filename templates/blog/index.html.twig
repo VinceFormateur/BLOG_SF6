@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Slug</th>
                 <th>Content</th>
@@ -20,24 +19,23 @@
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.slug }}</td>
                 <td>{{ post.content }}</td>
                 <td>{{ post.createdAt|date('d/m/Y')  }}</td>
                 <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_post_show', {'id': post.id}) }}">show</a>
-                    <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
+                    <a class="text-success pe-2" href="{{ path('app_blog_show_post', {'id': post.id}) }}">voir plus</a>
+                    <a class="text-info ps-2" href="{{ path('app_blog_edit_post', {'id': post.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucune Publication</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_post_new') }}">Create new</a>
+    <a href="{{ path('app_blog_new_post') }}">Nouvelle Publication</a>
 {% endblock %}
