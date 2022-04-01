@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Slug</th>
                 <th>Content</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
@@ -20,13 +19,12 @@
         {% for post in posts %}
             <tr>
                 <td>{{ post.title }}</td>
-                <td>{{ post.slug }}</td>
                 <td>{{ post.content }}</td>
                 <td>{{ post.createdAt|date('d/m/Y')  }}</td>
                 <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a class="text-success pe-2" href="{{ path('app_blog_show_post', {'id': post.id}) }}">voir plus</a>
-                    <a class="text-info ps-2" href="{{ path('app_blog_edit_post', {'id': post.id}) }}">modifier</a>
+                    <a class="text-success pe-2" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}">voir plus</a>
+                    <a class="text-info ps-2" href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}

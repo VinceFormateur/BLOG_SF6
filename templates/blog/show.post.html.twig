@@ -12,10 +12,6 @@
                 <td>{{ post.title }}</td>
             </tr>
             <tr>
-                <th>Slug</th>
-                <td>{{ post.slug }}</td>
-            </tr>
-            <tr>
                 <th>Content</th>
                 <td>{{ post.content }}</td>
             </tr>
@@ -32,7 +28,7 @@
 
     <a href="{{ path('app_blog_index') }}">Retour aux publications</a>
 
-    <a href="{{ path('app_blog_edit_post', {'id': post.id}) }}">Modifier</a>
+    <a href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}">Modifier</a>
 
     {{ include('blog/_delete_form.post.html.twig') }}
 {% endblock %}
