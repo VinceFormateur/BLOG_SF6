@@ -25,6 +25,10 @@ security:
                 path: app_main_logout
                 # where to redirect after logout
                 target: app_main_login
+            # Configuration du nombre maximum de tentatives de connexion échouées sur un temps donné (TODO à modifier avant de passer en prod)
+            login_throttling:
+                max_attempts: 50
+                interval: '55 minutes'                  
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
