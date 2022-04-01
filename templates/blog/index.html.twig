@@ -20,8 +20,8 @@
             <tr>
                 <td>{{ post.title }}</td>
                 <td>{{ post.content }}</td>
-                <td>{{ post.createdAt|date('d/m/Y')  }}</td>
-                <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y') : '' }}</td>
+                <td>{{ post.createdAt|date('d/m/Y H:i:s')  }}</td>
+                <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
                 <td>
                     <a class="text-success pe-2" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}">voir plus</a>
                     <a class="text-info ps-2" href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}">modifier</a>
