@@ -1,5 +1,23 @@
 /* VARIABLES SCSS */
-$body-bg: #0e2131 !default;
+
+// Color system
+$gray-800: #303030 !default;
+
+$red:     #e74c3c !default;
+$orange:  #fd7e14 !default;
+$yellow:  #f39c12 !default;
+
+$dark: #2c4866 !default;
+
+$body-bg: #0e1e2e !default;
+
+$navbar-dark-color:       rgba(#fff, .90) !default;
+$navbar-dark-hover-color: #ffb !default;
+
+// Components
+$border-radius:    5px !default;
+$border-radius-lg: 5px !default;
+$border-radius-sm: 3px !default;
 
 
 /* IMPORTS */
@@ -10,8 +28,41 @@ $body-bg: #0e2131 !default;
 
 
 /* MON SCSS */
+body {
+  font-size: 0.95rem!important;
+}
+
+.text-muted {
+  font-size: 0.8rem!important;
+}
+
 main {
   padding: 60px 10px 0;
+}
+
+.text-title-h1, .text-title-h2:hover  {
+  color: $navbar-dark-hover-color!important;
+}
+
+.text-title-h2, .text-title-h1:hover {
+  color: #bff!important;
+}
+
+.bg-post {
+  background-color: #172e49!important;
+}
+
+li.nav-item {
+  margin: 0 8px 0 8px!important;
+}
+
+.card {
+  border-radius: 11px!important;
+  box-shadow: rgba(0, 0, 0, 0.23) 0px 4px 8px, rgba(0, 0, 0, 0.33) 0px 4px 8px!important;
+}
+
+.card-header:first-child {
+  border-radius: 11px 11px 0 0 !important; 
 }
 
 /*--------------------  MESSAGES D'ALERTES --------------------*/
@@ -27,4 +78,3 @@ main {
     z-index: 1020;
     opacity: 0.75;
 }
-

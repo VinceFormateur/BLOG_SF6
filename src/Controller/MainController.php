@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 // Import Login
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+// Import Post
+use App\Repository\PostRepository;
 // Imports Register
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -20,9 +22,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function home(): Response
+    public function home(PostRepository $postRepository): Response
     {
-        return $this->render('main/home.html.twig');
+        return $this->render('main/home.html.twig', [
+            'posts' => $postRepository->findAll(),
+        ]);
     }
 
     #[Route('/contact', name: 'contact')]
