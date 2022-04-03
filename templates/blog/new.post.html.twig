@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}Nouvelle publication{% endblock %}
 
 {% block body %}
-    <h1>Create new Post</h1>
+<div class="container-lg">
+    <div class="row mt-5">
+        <div class="col-12 col-lg-10 offset-lg-1 bg-post border border-dark rounded p-4">
+            <h1 class="h2 col-12 text-title-h1 text-center mb-5">Nouvelle publication</h1>
 
-    {{ include('blog/_form.post.html.twig', {'button_label': 'Nouvelle Publication'}) }}
+            {{ include('blog/_form.post.html.twig', {'button_label': 'Publier'}) }}
 
-    <a href="{{ path('app_blog_index') }}">Retour</a>
+            <a href="{{ path('app_blog_index') }}" class="btn btn-outline-light w-100 mb-3">Annuler</a>  
+        </div>
+    </div>
+</div>
 {% endblock %}
+

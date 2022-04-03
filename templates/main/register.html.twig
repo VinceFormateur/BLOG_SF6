@@ -3,27 +3,23 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+<div class="container-lg">
+    <div class="row mt-4">
+        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded p-4 my-5">
 
-    <div class="container-md">
+            <h1 class="h2 col-12 text-title-h1 text-center mb-5">Inscription</h1>
 
-        <h1>Vous inscrire :</h1>
+            {{ form_start(registrationForm) }}
+                
+                {{ form_widget(registrationForm) }}
 
-        {{ form_start(registrationForm) }}
+                <button type="submit" class="btn btn-outline-info w-100 my-4">S'incrire</button>
 
-            {{ form_row(registrationForm.email) }}
+            {{ form_end(registrationForm) }}
 
-            {{ form_row(registrationForm.username) }}        
+            <a href="{{ path('app_main_login') }}" class="btn w-100 btn-outline-light w-100">Annuler</a>  
+        </div>          
+    </div> 
 
-            {{ form_row(registrationForm.plainPassword, {
-                label: 'Mot de passe'
-            }) }}
-
-    {#         {{ form_row(registrationForm.agreeTerms) }} #}
-
-            <button type="submit" class="btn btn-primary">Valider</button>
-
-        {{ form_end(registrationForm) }}
-        
-    </div>
-
+</div>
 {% endblock %}
