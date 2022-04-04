@@ -53,12 +53,19 @@
         <div class="col-12 col-md-8 offset-md-2">
             <div class="bg-dark p-4 my-4">
 
-                {# Nombre de commentaire dans le titre H2 #}
-                <h2 class="h3 text-title-h2 text-center mb-5">Commentaires ()</h2>
+                {# Nombre de commentaires dans le titre H2 #}
+                <h2 class="h3 text-title-h2 text-center mb-5">Commentaires ({{ post.comments|length }})</h2>
+             
 
                 {# Affichage de tous les commentaires en les parcourant avec une boucle #}
-                
-                <p class="text-center text-uppercase alert alert-info">Aucun commentaire pour cette publication</p>
+                {% for comment in post.comments %}
+
+                    {{ dump(comment.author.username) }}
+                    {{ dump(comment.content) }}
+
+                {% else %}
+                    <p class="text-center text-uppercase alert alert-info">Aucun commentaire pour cette publication</p>
+                {% endfor %}                
 
 
                 {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
