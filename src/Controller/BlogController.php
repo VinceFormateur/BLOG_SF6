@@ -79,7 +79,10 @@ class BlogController extends AbstractController
             $post->addComment($comment, $this->getUser());
 
             // On ajoute le commentaire en BDD
-            $commentRepository->add($comment); 
+            $commentRepository->add($comment);
+
+            // message Flash
+            $this->addFlash('success', 'merci pour votre commentaire');
 
             //Option 1 en renvoyant la vue avec le slug du Post
             return $this->redirectToRoute('app_blog_show_post', ['slug' => $post->getSlug()]);

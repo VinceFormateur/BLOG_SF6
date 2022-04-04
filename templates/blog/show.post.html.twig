@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ post.title|upper|slice(0, 20) }}{% endblock %}
 
 {% block body %}
 <div class="container-md-fluid">
 
     {# Titre h1 #}
     <div class="row">
-        <h1 class="col-12 text-center text-title-h1 my-4">{{ post.title }}</h1>
+        <h1 class="h2 col-12 text-center text-title-h1 my-4">{{ post.title|capitalize }}</h1>
     </div>
 
     <div class="row mb-3">
