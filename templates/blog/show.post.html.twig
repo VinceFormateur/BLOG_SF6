@@ -20,10 +20,10 @@
             <div class="card my-2 bg-post">
                 <div class="card-header">
                     {# Date et auteur de la publication et de la modification si nécessaire #}
-                    <div class="my-2 text-muted">
-                        Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span>
+                    <div class="py-1 text-muted">
+                        Publié le <span class="text-title-h2 px-1">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span>
                         {% if post.updatedAt %}
-                            et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
+                            et modifié le <span class="text-warning px-1">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
                         {% endif %}
                     </div> 
                 </div>     
@@ -54,14 +54,26 @@
             <div class="bg-dark p-4 my-4">
 
                 {# Nombre de commentaires dans le titre H2 #}
-                <h2 class="h3 text-title-h2 text-center mb-5">Commentaires ({{ post.comments|length }})</h2>
+                {% if post.comments|length %}
+                    <h2 class="h3 text-title-h2 text-center mb-3">Commentaires ({{ post.comments|length }})</h2>
+                {% endif %}
              
-
                 {# Affichage de tous les commentaires en les parcourant avec une boucle #}
                 {% for comment in post.comments %}
 
-                    {{ dump(comment.author.username) }}
-                    {{ dump(comment.content) }}
+                    <div class="card my-3 bg-post">
+
+                        {# Date et auteur du commentaire #}
+                        <div class="card-header text-muted">
+                            Ajouté par<span class="text-primary px-1">{{ comment.author.username }}</span>Le<span class="text-light ps-1">{{ comment.createdAt|date('d/m/Y à H\\hi') }}</span>                    
+                        </div>   
+
+                        {# Contenu du commentaire #}                 
+                        <div class="card-body"> 
+                            {{ comment.content }}
+                        </div>
+
+                    </div>
 
                 {% else %}
                     <p class="text-center text-uppercase alert alert-info">Aucun commentaire pour cette publication</p>
@@ -70,7 +82,7 @@
 
                 {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
                 {% if app.user %}
-                    <h2 class="h3 text-center my-4">Écrire un commentaire</h2>
+                    <h2 class="h3 text-center text-title-h1 my-4">Écrire un commentaire</h2>
                     {# Champ pour le commentaire (formulaire) #}
                     {{ form_start(form) }}
                         {{ form_widget(form) }}

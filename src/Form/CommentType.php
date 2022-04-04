@@ -6,13 +6,17 @@ use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
+            ->add('content', TextareaType::class, [
+                'label' => 'Tapez ici votre commentaire pour cette publication',
+                'help' => 'Le commentaire doit comporter entre 10 et 500 caractères',
+        ])
         ;
     }
 
@@ -20,6 +24,7 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Comment::class,
+            'required' => false,            
         ]);
     }
 }

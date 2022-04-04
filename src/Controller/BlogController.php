@@ -81,15 +81,14 @@ class BlogController extends AbstractController
             // On ajoute le commentaire en BDD
             $commentRepository->add($comment); 
 
-            // Option 1 en renvoyant la vue avec le slug du Post
-            // return $this->redirectToRoute('app_blog_show_post', ['slug' => $post->getSlug()]);
+            //Option 1 en renvoyant la vue avec le slug du Post
+            return $this->redirectToRoute('app_blog_show_post', ['slug' => $post->getSlug()]);
 
             // Option 2 en recréant les données Comment et Form 
-            unset($comment);
-            unset($form);
-
-            $comment = new Comment();
-            $form = $this->createForm(CommentType::class, $comment);            
+            // unset($comment);
+            // unset($form);
+            // $comment = new Comment();
+            // $form = $this->createForm(CommentType::class, $comment);            
         }        
 
         return $this->renderForm('blog/show.post.html.twig', [

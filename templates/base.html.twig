@@ -56,8 +56,9 @@
                           href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="fa-solid fa-lg fa-user pe-2"></i>{{ app.user.username }}
                       </a>
-                      <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
+                      <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end mt-3" aria-labelledby="navbarDarkDropdownMenuLink">
                         <li><a class="dropdown-item mb-2" href="#"><i class="fa-solid fa-lg fa-house pe-3"></i>Mon profil</a></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ path('app_main_logout') }}"><i class="fas fa-lg fa-sign-out-alt pe-3"></i>Me déconnecter</a></li>
                       </ul>
                   </li>
