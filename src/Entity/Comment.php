@@ -23,7 +23,7 @@ class Comment
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]  
     private $post;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]

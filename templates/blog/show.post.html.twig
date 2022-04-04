@@ -70,9 +70,12 @@
 
                 {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
                 {% if app.user %}
-                    <h2 class="text-center my-5">Écrire un commentaire</h2>
+                    <h2 class="h3 text-center my-4">Écrire un commentaire</h2>
                     {# Champ pour le commentaire (formulaire) #}
-
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button class="btn btn-outline-info w-100">{{ button_label|default('Commenter') }}</button>
+                    {{ form_end(form) }}
                 {% else %}
                     <p class="text-center text-info mt-4">
                         Vous devez <a href="{{ path('app_main_login') }}" class="text-title-h1">vous connecter</a> pour laisser un commentaire.

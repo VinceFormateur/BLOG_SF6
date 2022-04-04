@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\Comment;
 use App\Form\PostType;
+use App\Form\CommentType;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,13 +51,53 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'show_post', methods: ['GET'])]
-    public function showPost(Post $post): Response
+    #[Route('/{slug}', name: 'show_post', methods: ['GET', 'POST'])]
+    public function showPost(Post $post, Request $request, CommentRepository $commentRepository): Response
     {
-        return $this->render('blog/show.post.html.twig', [
+        // Si l'utilisateur n'est pas connecté, on envoie directement la vue sans le formulaire
+        // Pour optimiser le fonctionnement et la sécurité
+        if (!$this->getUser()) {
+            return $this->render('blog/show.post.html.twig', [
+                'post' => $post,
+            ]);
+        }
+
+        // Sinon on traite la vue avec le formulaire de commentaire et l'utilisateur connecté
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            // On renseigne les infos du commentaire (auteur et publication)
+            // $comment
+            //    ->setAuthor($this->getUser())
+            //    ->setPost($post);
+
+            // Ou en utilisant le méthode présente dans Post (modifiée)
+            $post->addComment($comment, $this->getUser());
+
+            // On ajoute le commentaire en BDD
+            $commentRepository->add($comment); 
+
+            // Option 1 en renvoyant la vue avec le slug du Post
+            // return $this->redirectToRoute('app_blog_show_post', ['slug' => $post->getSlug()]);
+
+            // Option 2 en recréant les données Comment et Form 
+            unset($comment);
+            unset($form);
+
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment);            
+        }        
+
+        return $this->renderForm('blog/show.post.html.twig', [
             'post' => $post,
+            'form' => $form,            
         ]);
     }
+
 
     #[Route('/{slug}/modifier-publication', name: 'edit_post', methods: ['GET', 'POST'])]
     public function editPost(Request $request, Post $post, PostRepository $postRepository): Response

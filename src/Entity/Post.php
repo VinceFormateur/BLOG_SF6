@@ -122,11 +122,12 @@ class Post
         return $this->comments;
     }
 
-    public function addComment(Comment $comment): self
+    public function addComment(Comment $comment, User $author): self
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
             $comment->setPost($this);
+            $comment->setAuthor($author);
         }
 
         return $this;
