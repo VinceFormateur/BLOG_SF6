@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /* TYPES */
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -22,7 +23,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Renseignez ici votre Email *',
+                'label' => 'Renseignez ici votre Email *',                
             ])
 
             ->add('username', TextType::class, [
@@ -30,25 +31,30 @@ class RegistrationFormType extends AbstractType
                 'help' => '25 caractères maximum',
             ])
 
-            ->add('plainPassword', PasswordType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'type' => PasswordType::class,
                 'mapped' => false,
-                'label' => 'Renseignez un mot de passe *',
-                'help' => '8 caractères minimum: 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial',
-                'attr' => ['autocomplete' => 'new-password'],
+                'invalid_message' => 'Les mots de passe doivent être identiques !',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'first_options'  => ['label' => 'Renseignez un mot de passe *', 
+                                     'help' => '8 caractères minimum: 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial',],
+                'second_options' => ['label' => 'Confirmez votre mot de passe *',
+                                     'help' => 'Répétez ici votre mot de passe',],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'le mot de passe est obligatoire',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Le mot de passe doit comporter au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
+
 
 /*            ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

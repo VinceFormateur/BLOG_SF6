@@ -29,13 +29,13 @@
                 </div>     
 
                 <div class="card-body">                   
-                    {# Affichage du contenu de la poublication #}
+                    {# Affichage du contenu de la publication #}
                     <div class="mb-2">
                         {{ post.content }}
                     </div>
                 </div>
 
-                {# Si l'utilisateur a le rôle admin, on affiche un menu avec un bouton permettant de supprimer/modifier l'article #}
+                {# Si l'utilisateur a le rôle admin, on affiche un menu avec un bouton permettant de supprimer/modifier la publication #}
                 {% if is_granted('ROLE_ADMIN') %}     
                     <div class="card-footer d-flex d-row justify-content-evenly mt-3">
                         <a href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}" class="btn btn-outline-success pe-3">
@@ -43,7 +43,7 @@
                         </a>                                
                         {{ include('blog/_delete_form.post.html.twig') }}
                     </div>
-                {% endif %}
+                {% endif %} 
             </div>
         </div>
     </div>
@@ -63,7 +63,6 @@
 
                 {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
                 {% if app.user %}
-
                     <h2 class="text-center my-5">Écrire un commentaire</h2>
                     {# Champ pour le commentaire (formulaire) #}
 

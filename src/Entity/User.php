@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -19,9 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank (message: 'L\'email est obligatoire')] 
+    #[Assert\Email(message: 'L\'email {{ value }} n\'est pas valide')]    
+    #[ORM\Column(type: 'string', length: 180, unique: true)]   
     private $email;
 
+    #[Assert\NotBlank (message: 'Le nom d\'utilisateur est obligatoire')]
     #[ORM\Column(type: 'string', length: 25, unique: true)]
     private $username;   
 
