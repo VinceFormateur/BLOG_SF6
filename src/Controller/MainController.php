@@ -77,7 +77,6 @@ class MainController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
             );
-
             $userRepository->add($user);
             $this->addFlash('success', 'Vous êtes bien inscrit');
 

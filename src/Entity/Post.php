@@ -32,6 +32,10 @@ class Post
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,5 +90,17 @@ class Post
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getAuthor(): ?user
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?user $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

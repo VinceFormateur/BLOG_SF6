@@ -9,7 +9,7 @@
 
         {# Affichage du nombre total de publications (attribut apporté par knp_paginator) #}
         <div class="col-12 ps-5">
-            <p class="text-left text-title-h1">Nombre total d'articles : </p>
+            <p class="text-left text-title-h1">Nombre total d'articles : {{ posts|length }}</p>
         </div>
 
         {# S'il y a des publications, on affiche le menu de pagination #}
@@ -29,7 +29,7 @@
                         <div class="card-body">
                             {# Date et auteur de la publication et de la modification si nécessaire #}
                             <div class="text-right text-muted mb-2 ms-auto">
-                                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">Auteur</span>
+                                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">{{ post.author.username }}</span>
                                 {% if post.updatedAt %}
                                     et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
                                 {% endif %}

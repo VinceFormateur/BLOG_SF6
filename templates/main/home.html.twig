@@ -54,7 +54,7 @@
 
                             {# Date et auteur de la publication et de la modification si nécessaire #}                            
                             <div class="card-footer text-muted py-2">
-                                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">Auteur</span>
+                                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">{{ post.author.username }}</span>
                                 {% if post.updatedAt %}
                                     et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
                                 {% endif %}
