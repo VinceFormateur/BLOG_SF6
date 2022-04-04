@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Post{% endblock %}
+{% block title %}Modifier : {{ post.title }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Post</h1>
+<div class="container-lg">
+    <div class="row mt-5">
+        <div class="col-12 col-lg-10 offset-lg-1 bg-post border border-dark rounded p-4">
+            <h1 class="h2 col-12 text-title-h1 text-center mb-5">Modifier cette publication</h1>
 
-    {{ include('blog/_form.post.html.twig', {'button_label': 'Modifier cette publication'}) }}
+            {{ include('blog/_form.post.html.twig', {'button_label': 'Sauvegarder les modifications'}) }}
 
-    <a href="{{ path('app_blog_index') }}">back to list</a>
+            {{ include('blog/_delete_form.post.html.twig', {'button_label': 'Supprimer cette publication' ,'size': 'w-100 mb-4'}) }}
 
-    {{ include('blog/_delete_form.post.html.twig') }}
+            <a href="{{ path('app_blog_show_post', {'slug': post.slug}) }}" class="btn btn-outline-light w-100 mb-3">Annuler</a>  
+        </div>
+    </div>
+</div>   
 {% endblock %}

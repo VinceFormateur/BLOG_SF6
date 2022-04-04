@@ -1,39 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post index{% endblock %}
+{% block title %}Blog{% endblock %}
 
 {% block body %}
-    <h1>Post index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Content</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for post in posts %}
-            <tr>
-                <td>{{ post.title }}</td>
-                <td>{{ post.content }}</td>
-                <td>{{ post.createdAt|date('d/m/Y H:i:s')  }}</td>
-                <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
-                <td>
-                    <a class="text-success pe-2" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}">voir plus</a>
-                    <a class="text-info ps-2" href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}">modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Aucune Publication</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container-fluid m-0 p-0">
+    <div class="row mt-3">
 
-    <a href="{{ path('app_blog_new_post') }}">Nouvelle Publication</a>
+        {# Affichage du nombre total de publications (attribut apporté par knp_paginator) #}
+        <div class="col-12 ps-5">
+            <p class="text-left text-title-h1">Nombre total d'articles : </p>
+        </div>
+
+        {# S'il y a des publications, on affiche le menu de pagination #}
+
+
+        {######### AFFICHAGE DES PUBLICATIONS ##########}
+        <div class="row m-0 p-0">
+            {# Boucle pour parcourir tous les publications à afficher #}
+            {% for post in posts %}
+                <div class="col-12 col-md-6 m-0 p-0">
+                    <div class="card m-3 bg-post">
+                        <div class="card-header">
+                            {# Titre de la publication, cliquable vers la page détaillée de celle-ci #}
+                            <a class="text-decoration-none text-title-h1" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}">{{ post.title }}</a>
+                        </div>
+
+                        <div class="card-body">
+                            {# Date et auteur de la publication et de la modification si nécessaire #}
+                            <div class="text-right text-muted mb-2 ms-auto">
+                                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">Auteur</span>
+                                {% if post.updatedAt %}
+                                    et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-2">
+                                {# Affichage du contenu de la publication, tronqué à 700 caractères, suivi de "..." et d'un lien "lire la suite" #}
+                                {{ post.content|slice(0, 700) }}  ...
+                                <a class="text-decoration-none text-title-h2" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}"> Lire la suite</a>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            {% else %}
+                <p class="col-12 text-center alert alert-warning">Aucune publication à afficher</p>
+            {% endfor %}   
+        </div>           
+
+        {# S'il y a des publications, on affiche le menu de pagination #}
+
+    </div>
+</div>
 {% endblock %}

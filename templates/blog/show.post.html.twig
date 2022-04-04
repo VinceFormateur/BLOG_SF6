@@ -3,32 +3,85 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-    <h1>Post</h1>
+<div class="container-md-fluid">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Title</th>
-                <td>{{ post.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ post.content }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ post.createdAt|date('d/m/Y H:i:s')}}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ post.updatedAt ? post.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {# Titre h1 #}
+    <div class="row">
+        <h1 class="col-12 text-center text-title-h1 my-4">{{ post.title }}</h1>
+    </div>
 
-    <a href="{{ path('app_blog_index') }}">Retour aux publications</a>
+    <div class="row mb-3">
+        <p class="h5 col-12 text-center">par <span class="text-title-h2">Auteur</span></p>
+    </div>
 
-    <a href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}">Modifier</a>
+    {########### AFFICHAGE DE LA PUBLICATION ###########}
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="card my-2 bg-post">
+                <div class="card-header">
+                    {# Date et auteur de la publication et de la modification si nécessaire #}
+                    <div class="my-2 text-muted">
+                        Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span>
+                        {% if post.updatedAt %}
+                            et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
+                        {% endif %}
+                    </div> 
+                </div>     
 
-    {{ include('blog/_delete_form.post.html.twig') }}
+                <div class="card-body">                   
+                    {# Affichage du contenu de la publication #}
+                    <div class="mb-2">
+                        {{ post.content }}
+                    </div>
+                </div>
+
+                {# Si l'utilisateur a le rôle admin, on affiche un menu avec un bouton permettant de supprimer/modifier la publication #}
+                {% if is_granted('ROLE_ADMIN') %}     
+                    <div class="card-footer d-flex d-row justify-content-evenly mt-3">
+                        <a href="{{ path('app_blog_edit_post', {'slug': post.slug}) }}" class="btn btn-outline-success pe-3">
+                            <i class="fas fa-edit me-1"></i>Modifier
+                        </a>                                
+                        {{ include('blog/_delete_form.post.html.twig') }}
+                    </div>
+                {% endif %} 
+            </div>
+        </div>
+    </div>
+
+    {############ ESPACE POUR LES COMMENTAIRES ###########}
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="bg-dark p-4 my-4">
+
+                {# Nombre de commentaire dans le titre H2 #}
+                <h2 class="text-title-h2 text-center mb-5">Commentaires ()</h2>
+
+                {# Affichage de tous les commentaires en les parcourant avec une boucle #}
+                
+                <p class="text-center text-uppercase alert alert-info">Aucun commentaire pour cette publication</p>
+
+
+                {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
+                {% if app.user %}
+                    <h2 class="text-center my-5">Écrire un commentaire</h2>
+                    {# Champ pour le commentaire (formulaire) #}
+
+                {% else %}
+                    <p class="text-center text-info mt-4">
+                        Vous devez <a href="{{ path('app_main_login') }}" class="text-title-h1">vous connecter</a> pour laisser un commentaire.
+                    </p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    {# Lien pour retourner à la liste des articles #}
+    <div class="row mt-2">
+        <p class="text-center col-12">
+            <a class="btn btn-outline-info" href="{{ path('app_blog_index') }}">Retour à la liste des publications</a>
+        </p>
+    </div>
+
+</div>
 {% endblock %}

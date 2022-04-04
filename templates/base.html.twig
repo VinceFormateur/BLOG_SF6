@@ -25,7 +25,7 @@
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
 
-          <a class="navbar-brand" href="{{ path('app_main_home') }}">Blog <i class="fa-solid fa-blog"></i> WF3</a>
+          <a class="navbar-brand ms-2 me-4" href="{{ path('app_main_home') }}">Blog<i class="fa-solid fa-blog px-2"></i>Sf6</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -36,27 +36,42 @@
             {# Menu de Gauche #}
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_blog_index') }}">Blog</a>
+                <a class="nav-link" href="{{ path('app_blog_index') }}"><i class="fa-solid fa-lg fa-newspaper pe-2"></i>Blog</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_main_contact') }}">Contact</a>
+                <a class="nav-link" href="{{ path('app_main_contact') }}"><i class="fa-solid fa-lg fa-envelope pe-2"></i>Contact</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_blog_new_post') }}">Nouvelle publication</a>
+                <a class="nav-link" href="{{ path('app_blog_new_post') }}"><i class="fa-solid fa-lg fa-file-circle-plus pe-2"></i>Nouvelle publication</a>
               </li>              
             </ul>
 
             {# Menu de Droite #}
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" href="#">Connexion <i class="fas fa-sign-in-alt"></i></a>
+
+                {% if app.user %}
+                  <li class="nav-item dropdown">
+                      <a  class="nav-link dropdown-toggle text-capitalize" 
+                          href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fa-solid fa-lg fa-user pe-2"></i>{{ app.user.username }}
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item mb-2" href="#"><i class="fa-solid fa-lg fa-house pe-3"></i>Mon profil</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_main_logout') }}"><i class="fas fa-lg fa-sign-out-alt pe-3"></i>Me déconnecter</a></li>
+                      </ul>
+                  </li>
+                {% else %}
+                  <a class="nav-link" href="{{ path('app_main_login') }}"><i class="fas fa-lg fa-sign-in-alt pe-2"></i>Connexion</a>
+                {% endif %}
+
               </li>
             </ul>            
 
             {# Formulaire de recherche #}
 {#             <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Recherche</button>
+              <input class="form-control me-2" type="search" placeholder="Trouver une publication" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
             </form> #}
 
           </div>

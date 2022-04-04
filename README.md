@@ -9,15 +9,14 @@ git clone https://github.com/VinceFormateur/BLOG_WF3.git
 
 ## Installation
 ```
-composer install
+composer install (pour la partie Composants installés)
 symfony console doctrine:database:create
 symfony console make:migration
 symfony console doctrine:migrations:migrate
-composer require symfony/webpack-encore-bundle
 npm install (pour la partie Webpack Encore)
 ```
 
-### Webpack Encore (package.json)
+### Webpack Encore (voir package.json)
 ```
  npm install sass-loader@^12.0.0 sass --save-dev
  npm install postcss-loader@^6.0.0 --save-dev
@@ -26,5 +25,12 @@ npm install (pour la partie Webpack Encore)
  npm install bootswatch
  npm install jquery
  npm install --save @fortawesome/fontawesome-free
+```
+
+### Composants installés (voir composer.json)
+```
+composer require symfony/webpack-encore-bundle (Webpack Encore)
+composer require stof/doctrine-extensions-bundle (Slug)
+composer require symfony/rate-limiter (Limitation de tentatives de connexion)
 ```
 

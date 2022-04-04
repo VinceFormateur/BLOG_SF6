@@ -20,6 +20,15 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            logout:
+                path: app_main_logout
+                # where to redirect after logout
+                target: app_main_login
+            # Configuration du nombre maximum de tentatives de connexion échouées sur un temps donné (TODO à modifier avant de passer en prod)
+            login_throttling:
+                max_attempts: 50
+                interval: '55 minutes'                  
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -27,11 +36,15 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_BLOGGER, ROLE_USER]
+        ROLE_BLOGGER: [ROLE_USER]
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/blog/publier, roles: ROLE_BLOGGER }
 
 when@test:
     security:
