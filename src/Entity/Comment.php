@@ -24,6 +24,7 @@ class Comment
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]  
+    #[ORM\JoinColumn(nullable: false)]    
     private $post;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
