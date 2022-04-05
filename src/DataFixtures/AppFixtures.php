@@ -14,6 +14,7 @@ use App\Entity\Comment;
 class AppFixtures extends Fixture
 {
 
+    private const MAX_NOMBRE_POST = 50;
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -54,17 +55,47 @@ class AppFixtures extends Fixture
             ->setUserName('user')
             ->setPassword($this->hasher->hashPassword($user, 'Password1*'))            
         ;        
-        $manager->persist($user);
+        $manager->persist($user); 
 
         // Création de 10 comptes aléatoires ROLE_USER
         for ($i=0; $i<10; $i++) {
             $user = new User();
             $user
-                ->setEmail('user'.$i.'@user.fr')
-                ->setUserName('user'.$i)
+                ->setEmail( $faker->email )
+                ->setUserName( $faker->userName )
                 ->setPassword($this->hasher->hashPassword($user, 'Password1*'))            
             ;        
             $manager->persist($user);
+        }
+
+        // Création de 100 Publications avec des données aléatoires et des commentaires (entre 0 et 10 par publication)
+        for ($i=0; $i<100; $i++) {
+
+            // Création d'un Post
+            $post = new Post();
+            // Définir les données de ce post
+            $post
+                ->setTitle( $faker->realText($maxNbChars = 100) )
+                ->setContent( $faker->realText($maxNbChars = 1000) )
+                ->setAuthor( $blogger )
+            ; 
+            // On persiste la publication
+            $manager->persist($post);
+
+            // Boucle de création des commentaires (entre 0 et 10)
+            $rand = rand(0, 10);
+            for ($j=0; $j < $rand; $j++) {
+                // Création d'un commentaire
+                $comment = new Comment();
+                // Définir les données de ce commentaire
+                $comment
+                    ->setContent( $faker->realText($maxNbChars = 500) )
+                    ->setPost($post)
+                    ->setAuthor($admin)
+                ;   
+                // On persiste le commentaires
+                $manager->persist($comment);                 
+            }
         }
 
         $manager->flush();
