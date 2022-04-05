@@ -82,7 +82,7 @@
 
                 {# Si l'utilisateur est connecté, affichage du formulaire de création d'un nouveau commentaire #}
                 {% if app.user %}
-                    <h2 class="h4 text-center text-title-h1 my-4">Écrire un {% if post.comments|length %}<span>nouveau</span>{% else %}<span>premier</span>{% endif %} commentaire</h2>
+                    <h2 class="h4 text-center text-title-h1 my-4">Écrire un {% if post.comments|length %}nouveau{% else %}premier{% endif %} commentaire</h2>
                     {# Champ pour le commentaire (formulaire) #}
                     {{ form_start(form) }}
                         {{ form_widget(form) }}
