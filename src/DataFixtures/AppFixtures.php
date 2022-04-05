@@ -14,7 +14,6 @@ use App\Entity\Comment;
 class AppFixtures extends Fixture
 {
 
-    private const MAX_NOMBRE_POST = 50;
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -36,7 +35,12 @@ class AppFixtures extends Fixture
             ->setPassword($this->hasher->hashPassword($admin, 'Password1*'))            
             ->setRoles(["ROLE_ADMIN"])
         ;
-        $manager->persist($admin);         
+        // On persiste l'admin        
+        $manager->persist($admin);
+        // On stocke l'admin dans un tableau pour l'attribuer aux publications        
+        $user_post[] = $admin;   
+        // On stocke l'admin dans un tableau pour l'utiliser pour les commentaires
+        $users[] = $admin;
         
         // Création d'un compte ROLE_BLOGGER
         $blogger = new User();
@@ -46,7 +50,12 @@ class AppFixtures extends Fixture
             ->setPassword($this->hasher->hashPassword($blogger, 'Password1*'))            
             ->setRoles(["ROLE_BLOGGER"])
         ;   
-        $manager->persist($blogger);       
+        // On persiste le Blogger        
+        $manager->persist($blogger);
+        // On stocke le blogger dans un tableau pour l'attribuer aux publications         
+        $user_post[] = $blogger;  
+        // On stocke le blogger dans un tableau pour l'utiliser pour les commentaires
+        $users[] = $blogger;
 
         // Création d'un compte ROLE_USER
         $user = new User();
@@ -54,7 +63,8 @@ class AppFixtures extends Fixture
             ->setEmail('c@c.fr')
             ->setUserName('user')
             ->setPassword($this->hasher->hashPassword($user, 'Password1*'))            
-        ;        
+        ;      
+        // On persiste l'utilisateur
         $manager->persist($user); 
 
         // Création de 10 comptes aléatoires ROLE_USER
@@ -64,8 +74,11 @@ class AppFixtures extends Fixture
                 ->setEmail( $faker->email )
                 ->setUserName( $faker->userName )
                 ->setPassword($this->hasher->hashPassword($user, 'Password1*'))            
-            ;        
+            ;      
+            // On persiste l'utilisateur
             $manager->persist($user);
+            // On stocke l'utilisateur dans un tableau pour l'utiliser pour les commentaires
+            $users[] = $user;
         }
 
         // Création de 100 Publications avec des données aléatoires et des commentaires (entre 0 et 10 par publication)
@@ -76,8 +89,8 @@ class AppFixtures extends Fixture
             // Définir les données de ce post
             $post
                 ->setTitle( $faker->realText($maxNbChars = 100) )
-                ->setContent( $faker->realText($maxNbChars = 1000) )
-                ->setAuthor( $blogger )
+                ->setContent( $faker->realText($maxNbChars = 2000) )
+                ->setAuthor( $faker->randomElement($user_post) )
             ; 
             // On persiste la publication
             $manager->persist($post);
@@ -91,9 +104,10 @@ class AppFixtures extends Fixture
                 $comment
                     ->setContent( $faker->realText($maxNbChars = 500) )
                     ->setPost($post)
-                    ->setAuthor($admin)
+                    // On récupère aléatoirement un utilisateur dans le tableau précédent
+                    ->setAuthor( $faker->randomElement($users) )
                 ;   
-                // On persiste le commentaires
+                // On persiste le commentaire
                 $manager->persist($comment);                 
             }
         }
