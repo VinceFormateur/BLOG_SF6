@@ -29,6 +29,7 @@ npm install (pour la partie Webpack Encore)
 
 ### Composants installés (voir composer.json)
 ```
+pour Update -> composer update
 composer require symfony/webpack-encore-bundle (Webpack Encore)
 composer require stof/doctrine-extensions-bundle (Slug)
 composer require symfony/rate-limiter (Limitation de tentatives de connexion)
