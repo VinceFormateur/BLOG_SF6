@@ -127,7 +127,8 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/modifier-publication', name: 'edit_post', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/modifier/{slug}', name: 'edit_post', methods: ['GET', 'POST'])]
     public function editPost(Request $request, Post $post, PostRepository $postRepository): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -148,14 +149,32 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete_post', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/publication-suppression/{id}', name: 'delete_post', methods: ['POST'])]
     public function deletePost(Request $request, Post $post, PostRepository $postRepository): Response
     {
-        if ($this->isCsrfTokenValid('mon_joli_blog'.$post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_post_blog'.$post->getId(), $request->request->get('_token'))) {
             $postRepository->remove($post);
             $this->addFlash('success', 'Publication bien effacée');
         }
 
         return $this->redirectToRoute('app_blog_index');
     }
+
+    /*********** Gestion des COMMENTS ***********/
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/commentaire-suppression/{id}', name: 'delete_comment', methods: ['POST'])]
+    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete_comment_blog'.$comment->getId(), $request->request->get('_token'))) {
+            $commentRepository->remove($comment);
+            $this->addFlash('success', 'Commentaire bien effacé');            
+        }
+
+        // Redirection de l'utilisateur sur la page détaillée de l'article auquel est/était rattaché le commentaire
+        return $this->redirectToRoute('app_blog_show_post', [
+            'slug' => $comment->getPost()->getSlug(),
+        ]);
+    }    
 }
