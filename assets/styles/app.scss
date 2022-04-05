@@ -19,7 +19,6 @@ $border-radius:    5px !default;
 $border-radius-lg: 5px !default;
 $border-radius-sm: 3px !default;
 
-
 /* IMPORTS */
 @import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "../../node_modules/bootswatch/dist/superhero/variables";
@@ -28,6 +27,9 @@ $border-radius-sm: 3px !default;
 
 
 /* MON SCSS */
+
+$post-bg: #172e49;
+
 body {
   font-size: 0.95rem!important;
 }
@@ -38,6 +40,10 @@ body {
 
 main {
   padding: 60px 10px 0;
+}
+
+header nav.navbar {
+  opacity: 0.90!important;  
 }
 
 .dropdown-menu-dark {
@@ -53,7 +59,7 @@ main {
 }
 
 .bg-post {
-  background-color: #172e49!important;
+  background-color: $post-bg!important;
 }
 
 li.nav-item {
@@ -92,4 +98,23 @@ label {
     left: 0;
     z-index: 1020;
     opacity: 0.75;
+}
+
+/*------------------------ PAGINATION -------------------------*/
+
+ .page-item.active .page-link {
+    background-color: $dark!important;
+}
+
+ .page-item .page-link {
+    background-color: $post-bg!important;
+    border-color: $dark!important;  
+}
+
+.page-item .page-link:hover {
+    background-color: $dark!important;
+} 
+
+.page-item .page-link:focus, .page-item .page-link.focus {
+  box-shadow: none!important;
 }
