@@ -36,5 +36,6 @@ composer require stof/doctrine-extensions-bundle (Slug)
 composer require symfony/rate-limiter (Limitation de tentatives de connexion)
 composer require --dev orm-fixtures
 composer require fakerphp/faker
+composer require knplabs/knp-paginator-bundle
 ```
 

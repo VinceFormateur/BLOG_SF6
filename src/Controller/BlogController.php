@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
+// ENTITY
 use App\Entity\Post;
 use App\Entity\Comment;
+// FORM
 use App\Form\PostType;
 use App\Form\CommentType;
+// REPOSITORY
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/blog', name: 'app_blog_')]
 class BlogController extends AbstractController
@@ -20,10 +25,27 @@ class BlogController extends AbstractController
     /*********** Gestion des POSTS ***********/
 
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function indexBlog(PostRepository $postRepository): Response
+    public function indexBlog(PostRepository $postRepository, PaginatorInterface $paginator, Request $request): Response
     {
+
+        // Récupération du numéro de la page demangée
+        $requestedPage = $request->query->getInt('page', 1);
+
+        // Vérification que le numéro est positif
+        if ($requestedPage < 1) { throw new NotFoundHttpException(); }
+
+        // Requête pour ordonner les publications (la plus récente en premier)
+        $data = $postRepository->findBy([], ['createdAt' => 'desc']);
+
+        // Récupération des publications paginées
+        $posts_paginate = $paginator->paginate(
+            $data, // Requête de récupération des publications 
+            $requestedPage, // Numéro de la page demandée dans $request
+            4 // Nombre de publications par page
+        );
+
         return $this->render('blog/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts_paginate' => $posts_paginate,
         ]);
     }
 
