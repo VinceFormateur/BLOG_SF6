@@ -33,5 +33,6 @@ pour Update -> composer update
 composer require symfony/webpack-encore-bundle (Webpack Encore)
 composer require stof/doctrine-extensions-bundle (Slug)
 composer require symfony/rate-limiter (Limitation de tentatives de connexion)
+composer require --dev orm-fixtures
 ```
 
