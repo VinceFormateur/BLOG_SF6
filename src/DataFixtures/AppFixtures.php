@@ -13,6 +13,10 @@ use App\Entity\Comment;
 
 class AppFixtures extends Fixture
 {
+    // configuration des constantes pour la création des éléments
+    private const MAX_USER = 47;
+    private const MAX_POST = 100;
+    private const MAX_COMMENT = 20;
 
     private UserPasswordHasherInterface $hasher;
 
@@ -67,8 +71,8 @@ class AppFixtures extends Fixture
         // On persiste l'utilisateur
         $manager->persist($user); 
 
-        // Création de 10 comptes aléatoires ROLE_USER
-        for ($i=0; $i<10; $i++) {
+        // Création de MAX_USER comptes aléatoires ROLE_USER
+        for ($i=0; $i<self::MAX_USER; $i++) {
             $user = new User();
             $user
                 ->setEmail( $faker->email )
@@ -81,8 +85,8 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
 
-        // Création de 100 Publications avec des données aléatoires et des commentaires (entre 0 et 10 par publication)
-        for ($i=0; $i<100; $i++) {
+        // Création de MAX_POST Publications avec des données aléatoires et des commentaires (entre 0 et MAX_COMMENT par publication)
+        for ($i=0; $i<self::MAX_POST; $i++) {
 
             // Création d'un Post
             $post = new Post();
@@ -95,8 +99,8 @@ class AppFixtures extends Fixture
             // On persiste la publication
             $manager->persist($post);
 
-            // Boucle de création des commentaires (entre 0 et 10)
-            $rand = rand(0, 10);
+            // Boucle de création des commentaires (entre 0 et MAX_COMMENT)
+            $rand = rand(0, self::MAX_COMMENT);
             for ($j=0; $j < $rand; $j++) {
                 // Création d'un commentaire
                 $comment = new Comment();
