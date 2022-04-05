@@ -41,9 +41,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_main_contact') }}"><i class="fa-solid fa-lg fa-envelope pe-2"></i>Contact</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_blog_new_post') }}"><i class="fa-solid fa-lg fa-file-circle-plus pe-2"></i>Nouvelle publication</a>
-              </li>              
+              {% if is_granted('ROLE_BLOGGER') %}                   
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('app_blog_new_post') }}"><i class="fa-solid fa-lg fa-file-circle-plus pe-2"></i>Nouvelle publication</a>
+                </li>              
+              {% endif %}
             </ul>
 
             {# Menu de Droite #}

@@ -16,7 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+// PAGINATOR
 use Knp\Component\Pager\PaginatorInterface;
+// CONTROLE DES ROLES
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/blog', name: 'app_blog_')]
 class BlogController extends AbstractController
@@ -49,6 +53,7 @@ class BlogController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_BLOGGER')]
     #[Route('/publier', name: 'new_post', methods: ['GET', 'POST'])]
     public function newPost(Request $request, PostRepository $postRepository): Response
     {
@@ -121,7 +126,6 @@ class BlogController extends AbstractController
             'form' => $form,            
         ]);
     }
-
 
     #[Route('/{slug}/modifier-publication', name: 'edit_post', methods: ['GET', 'POST'])]
     public function editPost(Request $request, Post $post, PostRepository $postRepository): Response
