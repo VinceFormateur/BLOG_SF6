@@ -10,10 +10,11 @@ git clone https://github.com/VinceFormateur/BLOG_WF3.git
 ## Installation
 ```
 composer install (pour la partie Composants installés)
+npm install (pour la partie Webpack Encore)
 symfony console doctrine:database:create
 symfony console make:migration
 symfony console doctrine:migrations:migrate
-npm install (pour la partie Webpack Encore)
+symfony console doctrine:fixtures:load
 ```
 
 ### Webpack Encore (voir package.json)
@@ -34,5 +35,6 @@ composer require symfony/webpack-encore-bundle (Webpack Encore)
 composer require stof/doctrine-extensions-bundle (Slug)
 composer require symfony/rate-limiter (Limitation de tentatives de connexion)
 composer require --dev orm-fixtures
+composer require fakerphp/faker
 ```
 
