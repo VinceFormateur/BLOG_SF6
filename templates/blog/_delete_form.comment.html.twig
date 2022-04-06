@@ -5,5 +5,5 @@
     
     <input type="hidden" name="_token" value="{{ csrf_token('delete_comment_blog' ~ comment.id) }}">
     
-    <button class="btn btn-sm btn-outline-warning {{ size|default('') }}"><i class="fas fa-trash-alt pe-3"></i>{{ button_label|default('Supprimer') }}</button>
+    <button class="btn btn-sm btn-outline-warning {{ size|default('') }}">{{ button_label|default('Supprimer') }}<i class="fas fa-trash-alt ps-2"></i></button>
 </form>

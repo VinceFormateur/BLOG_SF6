@@ -73,7 +73,7 @@
                             {{ comment.content }}
                         </div>
 
-                        {# Si le'utilisateur est admin, affichage de la suppression du commentaire #}
+                        {# Si l'utilisateur est admin, affichage de la suppression du commentaire #}
                         {% if is_granted('ROLE_ADMIN') %}
                             <div class="card-footer d-flex d-row justify-content-end p-1">
                                 {{ include('blog/_delete_form.comment.html.twig') }}                            
