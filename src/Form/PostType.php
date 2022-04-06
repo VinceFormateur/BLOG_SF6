@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /* TYPES */
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class PostType extends AbstractType
 {

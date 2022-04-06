@@ -15,6 +15,7 @@ symfony console doctrine:database:create
 symfony console make:migration
 symfony console doctrine:migrations:migrate
 symfony console doctrine:fixtures:load
+symfony console assets:install public
 ```
 
 ### Webpack Encore (voir package.json)
@@ -37,5 +38,7 @@ composer require symfony/rate-limiter (Limitation de tentatives de connexion)
 composer require --dev orm-fixtures
 composer require fakerphp/faker
 composer require knplabs/knp-paginator-bundle
+composer require friendsofsymfony/ckeditor-bundle
+composer require exercise/htmlpurifier-bundle -> (voir une version compatible Symfony 6)
 ```
 
