@@ -8,24 +8,12 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
                 <th>Username</th>
                 <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Avatar</th>
-                <td>{{ user.avatar }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
@@ -41,6 +29,13 @@
             </tr>
         </tbody>
     </table>
+
+    {% for comment in user.comments %}
+
+        {{ dump(comment.content) }}
+
+    {% endfor %}    
+
 
     <a href="{{ path('app_admin_index') }}">back to list</a>
 

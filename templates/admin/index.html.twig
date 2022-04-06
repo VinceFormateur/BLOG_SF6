@@ -8,11 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Email</th>
                 <th>Username</th>
-                <th>Password</th>
-                <th>Avatar</th>
                 <th>Roles</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
@@ -22,11 +19,8 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.username }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.avatar }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
