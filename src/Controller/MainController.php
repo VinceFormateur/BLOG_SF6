@@ -16,12 +16,14 @@ use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+// PAGINATOR
+use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/', name: 'app_main_')]
 class MainController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route(path: '/', name: 'home')]
     public function home(PostRepository $postRepository): Response
     {
         return $this->render('main/home.html.twig', [
@@ -29,7 +31,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/contact', name: 'contact')]
+    #[Route(path: '/contact', name: 'contact')]
     public function contact(): Response
     {
         return $this->render('main/contact.html.twig');
@@ -57,7 +59,7 @@ class MainController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route('/inscription', name: 'register')]
+    #[Route(path: '/inscription', name: 'register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
         if ($this->getUser()) {
@@ -87,6 +89,32 @@ class MainController extends AbstractController
 
         return $this->renderForm('main/register.html.twig', [
             'registrationForm' => $form,
+        ]);
+    }
+
+    #[Route(path: '/recherche', name: 'search', methods: ['GET'])]
+    public function search(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response 
+    {
+        // Récupération du numéro de la page demangée
+        $requestedPage = $request->query->getInt('page', 1);
+        // Vérification que le numéro est positif
+        if ($requestedPage < 1) { throw new NotFoundHttpException(); }        
+        // On récupère le contenu du champ de recherche
+        $search = $request->query->get('search', '');
+
+        // Utilisation de la méthode présente dans le repository pour rechercher l'élément (dans le titre et le contenu)
+        $posts = $postRepository->findBySearch($search);
+
+        // Récupération des publications paginées
+        $posts_paginate = $paginator->paginate(
+            $posts, // Requête de récupération des publications 
+            $requestedPage, // Numéro de la page demandée dans $request
+            4 // Nombre de publications par page
+        );        
+
+        // Réponse -> envoyer une page contenant les éléments à afficher
+        return $this->render('blog/search.post.html.twig', [
+            'posts' => $posts_paginate,
         ]);
     }
 

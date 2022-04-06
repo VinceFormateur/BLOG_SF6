@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog{% endblock %}
+{% block title %}Recherche{% endblock %}
 
 {% block body %}
 
@@ -8,29 +8,31 @@
     <div class="row mt-3">
 
         {# Affichage du nombre total de publications (attribut apporté par knp_paginator) #}
-        <div class="col-12 ps-5">
-            <p class="text-left text-title-h1">Nombre total de publications : {{ posts_paginate.getTotalItemCount }}</p>
-        </div>
+        {% if posts %}
+            <div class="col-12 ps-5">
+                <p class="text-left text-title-h1">Nombre total de résultats de votre recherche : {{ posts.getTotalItemCount }}</p>
+            </div>
+        {% endif %}
 
         {# S'il y a des publications, on affiche le menu de pagination #}
         <div class="row">
             <div class="col-12 text-center">
                 <div class="d-inline-block">
-                    {{ knp_pagination_render(posts_paginate) }}             
+                    {{ knp_pagination_render(posts) }}             
                 </div>
             </div>            
         </div>
 
         {######### AFFICHAGE DES PUBLICATIONS ##########}
         <div class="row m-0 p-0">
-
-            {% for post in posts_paginate %}
+            {# Boucle pour parcourir tous les publications à afficher #}
+            {% for post in posts %}
 
                 {# Boucle d'affichage des Posts #}
                 {{ include('blog/_posts.view.html.twig') }}
 
             {% else %}
-                <p class="col-12 text-center alert alert-warning">Aucune publication à afficher</p>
+                <p class="col-8 text-center alert alert-info offset-2">Aucun résultat pour cette recherche</p>
             {% endfor %}   
         </div>           
 

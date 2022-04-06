@@ -1,0 +1,25 @@
+{# Boucle d'affichage pour parcourir toutes les publications  #}
+<div class="col-12 col-md-6 m-0 p-0">
+    <div class="card m-3 bg-post">
+        <div class="card-header">
+            {# Titre de la publication, cliquable vers la page détaillée de celle-ci #}
+            <a class="text-decoration-none text-title-h1" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}">{{ post.title }}</a>
+        </div>
+
+        <div class="card-body">
+            {# Date et auteur de la publication et de la modification si nécessaire #}
+            <div class="text-right text-muted mb-2 ms-auto">
+                Publié le <span class="text-warning">{{ post.createdAt|date('d/m/Y à H\\hi') }}</span> par <span class="text-title-h2">{{ post.author.username }}</span>
+                {% if post.updatedAt %}
+                    et modifié le <span class="text-warning">{{ post.updatedAt|date('d/m/Y à H\\hi') }}</span>
+                {% endif %}
+            </div>
+
+            <div class="mb-2">
+                {# Affichage du contenu de la publication, tronqué à 700 caractères, suivi de "..." et d'un lien "lire la suite" #}
+                {{ post.content|slice(0, 700) }}  ...
+                <a class="text-decoration-none text-title-h2" href="{{ path('app_blog_show_post', {'slug': post.slug}) }}"> Lire la suite</a>
+            </div>
+        </div>
+    </div>                
+</div>
