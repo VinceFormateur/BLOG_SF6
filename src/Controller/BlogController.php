@@ -165,7 +165,7 @@ class BlogController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin/commentaire-suppression/{id}', name: 'delete_comment', methods: ['POST'])]
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
         if ($this->isCsrfTokenValid('delete_comment_blog'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment);
