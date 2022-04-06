@@ -39,5 +39,6 @@ composer require --dev orm-fixtures
 composer require fakerphp/faker
 composer require knplabs/knp-paginator-bundle
 composer require friendsofsymfony/ckeditor-bundle
+composer require exercise/htmlpurifier-bundle -> (voir une version compatible Symfony 6)
 ```
 

@@ -22,7 +22,7 @@ class PostType extends AbstractType
                 'help' => '100 caractères maximum',
         ])
 
-            ->add('content', CKEditorType::class, [
+            ->add('content', TextareaType::class, [
                 'label' => 'Définissez son contenu *',
                 'help' => '',
         ])
