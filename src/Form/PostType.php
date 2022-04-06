@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /* TYPES */
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class PostType extends AbstractType
 {
@@ -21,7 +22,7 @@ class PostType extends AbstractType
                 'help' => '100 caractères maximum',
         ])
 
-            ->add('content', TextareaType::class, [
+            ->add('content', CKEditorType::class, [
                 'label' => 'Définissez son contenu *',
                 'help' => '',
         ])
