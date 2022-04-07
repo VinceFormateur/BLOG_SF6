@@ -14,6 +14,7 @@ use App\Repository\PostRepository;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
+use App\Form\ContactType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 // PAGINATOR
@@ -32,9 +33,24 @@ class MainController extends AbstractController
     }
 
     #[Route(path: '/contact', name: 'contact')]
-    public function contact(): Response
+    public function contact(Request $request,): Response
     {
-        return $this->render('main/contact.html.twig');
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+            $data = $form->getData(); 
+
+            dump($data['message']);
+           
+            //$this->addFlash('success', '');
+
+            //return $this->redirectToRoute('app_main_home');
+        }
+
+        return $this->renderForm('main/contact.html.twig', [
+            'form' => $form]);
     }
 
     #[Route(path: '/connexion', name: 'login')]

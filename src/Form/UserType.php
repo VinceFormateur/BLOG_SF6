@@ -17,7 +17,8 @@ class UserType extends AbstractType
             ->add('email')
             ->add('username')
             ->add('roles', ChoiceType::class, [
-                'placeholder' => 'choisir une catégorie',
+                'label' => 'Modifier le rôle de l\'utilisateur',
+                'placeholder' => false,
                 'required' => true,
                 'multiple' => false,
                 'expanded' => true,
@@ -32,14 +33,14 @@ class UserType extends AbstractType
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(
                 function ($rolesArray) {
-                    // transform the array to a string
-                    return count($rolesArray)? $rolesArray[0]: null;
+                    // transform the array(json) to a string
+                    return implode(', ', $rolesArray);
                 },
                 function ($rolesString) {
-                    // transform the string back to an array
-                    return [$rolesString];
+                    // transform the string back to an array(json)
+                    return explode(', ', $rolesString);
                 }
-            ));        
+        ));        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
