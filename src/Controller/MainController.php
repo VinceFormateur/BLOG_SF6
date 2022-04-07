@@ -53,8 +53,10 @@ class MainController extends AbstractController
             $message = (new Email())
                     ->from('vince.symfony@gmail.com')
                     ->to('vince.symfony@gmail.com')
-                    ->subject('vous avez reçu un email de ' . $contactFormData['fullname'])
-                    ->text('Son adresse email : ' . $contactFormData['email'] 
+                    ->subject('vous avez reçu un email de Contact de ' . $contactFormData['fullname'])
+                    ->text('Son nom : ' . $contactFormData['fullname'] 
+                        . \PHP_EOL 
+                        . 'Son adresse email : ' . $contactFormData['email'] 
                         . \PHP_EOL 
                         . 'Son téléphone : ' . $phone
                         . \PHP_EOL
