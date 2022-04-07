@@ -19,6 +19,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 // PAGINATOR
 use Knp\Component\Pager\PaginatorInterface;
+// EMAIL
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 
 #[Route('/', name: 'app_main_')]
@@ -33,20 +36,36 @@ class MainController extends AbstractController
     }
 
     #[Route(path: '/contact', name: 'contact')]
-    public function contact(Request $request,): Response
+    public function contact(Request $request, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
            
-            $data = $form->getData(); 
+            // Récupération des données dans le formulaire sous-forme de tableau
+            $contactFormData = $form->getData(); 
 
-            dump($data['message']);
+            // Test sur le champ phone (optionnel)
+            $phone = $contactFormData['phone'] ? $contactFormData['phone'] : 'non renseigné';
+
+            // Création du message (Email Text)
+            $message = (new Email())
+                    ->from('vince.symfony@gmail.com')
+                    ->to('vince.symfony@gmail.com')
+                    ->subject('vous avez reçu un email de ' . $contactFormData['fullname'])
+                    ->text('Son adresse email : ' . $contactFormData['email'] 
+                        . \PHP_EOL 
+                        . 'Son téléphone : ' . $phone
+                        . \PHP_EOL
+                        . 'Son message : ' . $contactFormData['message'], 'text/plain');
+
+            // Envoi de l'email
+            $mailer->send($message);            
            
-            //$this->addFlash('success', '');
+            $this->addFlash('success', 'Votre message a bien été envoyé');
 
-            //return $this->redirectToRoute('app_main_home');
+            return $this->redirectToRoute('app_main_home');
         }
 
         return $this->renderForm('main/contact.html.twig', [
