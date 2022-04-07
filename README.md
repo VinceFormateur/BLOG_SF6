@@ -11,6 +11,7 @@ git clone https://github.com/VinceFormateur/BLOG_WF3.git
 ```
 composer install (pour la partie Composants installés)
 npm install (pour la partie Webpack Encore)
+npm run dev (pour le dossier Public de l'application)
 symfony console doctrine:database:create
 symfony console make:migration
 symfony console doctrine:migrations:migrate
@@ -40,5 +41,6 @@ composer require fakerphp/faker
 composer require knplabs/knp-paginator-bundle
 composer require friendsofsymfony/ckeditor-bundle
 composer require exercise/htmlpurifier-bundle -> (voir une version compatible Symfony 6)
+composer require symfony/google-mailer (Uniquement pour le service GMail)
 ```
 
