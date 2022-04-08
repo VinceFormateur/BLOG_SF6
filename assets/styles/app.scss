@@ -42,8 +42,15 @@ main {
   padding: 60px 10px 0;
 }
 
-header nav.navbar {
+header nav.navbar, main nav.navbar {
   opacity: 0.90!important;  
+}
+
+main nav.navbar {
+  position: fixed!important;
+  top: 58px!important;
+  left: 0!important;
+  right: 0!important;
 }
 
 .dropdown-menu-dark {

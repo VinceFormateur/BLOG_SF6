@@ -3,11 +3,41 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
 
-    <table class="table">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0">
+  <div class="container-lg">
+
+    <a class="navbar-brand text-light" href="#">Administration</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Utilisateurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Publications</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Commentaires</a>
+        </li>      
+      </ul>
+
+{#       <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> #}
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid px-2 px-lg-5 mt-5">
+    
+    <table class="table table-hover table-responsive-lg">
         <thead>
-            <tr>
+            <tr class="bg-dark text-title-h1">
                 <th>Email</th>
                 <th>Username</th>
                 <th>Roles</th>
@@ -37,5 +67,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_new') }}">Create new</a>
+</div>
 {% endblock %}
