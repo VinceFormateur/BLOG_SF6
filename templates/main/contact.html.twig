@@ -2,6 +2,14 @@
 
 {% block title %}Contact{% endblock %}
 
+{% block stylesheets %}
+	 {# inclus le block CSS commun #}
+	 {{ parent() }}
+	 {# Insertion du fichier JS dans le block stylesheets #}
+	 {# La documentation de Recaptcha préconise en effet d'intégrer ce fichier JS dans le head #}
+	 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}	
+
 {% block body %}
 <div class="container-lg">
     <div class="row">
@@ -12,6 +20,12 @@
 			{{ form_start(form) }}
 
 			    {{ form_widget(form) }}
+
+                {# Affichage du recaptcha #}
+                <div class="mb-3">
+                    {# La clé publique est récupérée en paramètre dans le fichier config/packages/twig.yaml #}
+                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}" data-theme="dark" data-size="normal"></div>
+                </div>			    
 
 			    <button class="btn btn-outline-info w-100 my-4">Envoyer mon message</button>
 			    
