@@ -6,6 +6,8 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+// Constraints
+use Symfony\Component\Validator\Constraints as Assert;
 // Import de la logique des SLUG
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -13,33 +15,53 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\HasLifecycleCallbacks]
 class Post
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+
+    #[Assert\NotBlank (message: 'Le titre de la publication est obligatoire !')]
+    #[Assert\Length(
+        min: 5,
+        max: 100,
+        minMessage: 'Le titre doit comporter au moins {{ limit }} caractères',
+        maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caractères',
+    )]      
+    #[Assert\Type('string')]
     #[ORM\Column(type: 'string', length: 100)]
     private $title;
 
+
     #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Assert\Type('string')]
     #[Gedmo\Slug(fields: ['title'])]    
     private $slug;
 
-    #[ORM\Column(type: 'text')]
+
+    #[Assert\NotBlank (message: 'Le contenu de la publication est obligatoire !')]
+    #[Assert\Type('string')]    
+    #[ORM\Column(type: 'text')]    
     private $content;
+
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
+
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
+
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     private $author;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
+
 
     public function __construct()
     {
@@ -56,7 +78,7 @@ class Post
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -73,7 +95,7 @@ class Post
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 

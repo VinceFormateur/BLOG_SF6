@@ -27,6 +27,8 @@ use Symfony\Component\Mime\Email;
 #[Route('/', name: 'app_main_')]
 class MainController extends AbstractController
 {
+
+    /****  ACCUEIL  ****/
     #[Route(path: '/', name: 'home')]
     public function home(PostRepository $postRepository): Response
     {
@@ -35,6 +37,8 @@ class MainController extends AbstractController
         ]);
     }
 
+
+    /****  FORMULAIRE DE CONTACT  ****/
     #[Route(path: '/contact', name: 'contact')]
     public function contact(Request $request, MailerInterface $mailer): Response
     {
@@ -74,6 +78,8 @@ class MainController extends AbstractController
             'form' => $form]);
     }
 
+
+    /****  CONNEXION  ****/
     #[Route(path: '/connexion', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -90,12 +96,16 @@ class MainController extends AbstractController
         return $this->render('main/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+
+    /****  DECONNEXION  ****/
     #[Route(path: '/deconnexion', name: 'logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+
+    /****  INSCRIPTION  ****/
     #[Route(path: '/inscription', name: 'register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
@@ -129,6 +139,7 @@ class MainController extends AbstractController
         ]);
     }
 
+    /****  RECHERCHE  ****/
     #[Route(path: '/recherche', name: 'search', methods: ['GET'])]
     public function search(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response 
     {

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+// Constraints
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -21,36 +22,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
+  
 
-    #[Assert\NotBlank (message: 'L\'email est obligatoire')] 
+    #[Assert\NotBlank (message: 'L\'email est obligatoire')]
     #[Assert\Email(message: 'L\'email {{ value }} n\'est pas valide')]    
-    #[ORM\Column(type: 'string', length: 180, unique: true)]   
+    #[Assert\Type('string')]     
+    #[ORM\Column(type: 'string', length: 180, unique: true)]     
     private $email;
 
+
     #[Assert\NotBlank (message: 'Le nom d\'utilisateur est obligatoire')]
+    #[Assert\Type('string')]      
     #[ORM\Column(type: 'string', length: 25, unique: true)]
     private $username;   
 
+
+    #[Assert\Type('string')]  
     #[ORM\Column(type: 'string')]
     private $password;
 
+
+    #[Assert\Type('string')]  
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $avatar;
 
+
+    #[Assert\Type('array')]  
     #[ORM\Column(type: 'json')]
-    private $roles = [];    
+    private $roles = [];   
+
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
+
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class)]
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, orphanRemoval: true)]
     private $posts;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
+
 
     public function __construct()
     {

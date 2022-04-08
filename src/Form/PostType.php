@@ -19,7 +19,7 @@ class PostType extends AbstractType
 
             ->add('title', TextType::class, [
                 'label' => 'Renseignez le titre de votre publication *',
-                'help' => '100 caractères maximum',
+                'help' => 'entre 5 et 100 caractères maximum',
         ])
 
             ->add('content', TextareaType::class, [

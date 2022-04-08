@@ -23,7 +23,7 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('fullname', TextType::class, [
-                'label' => 'Indiquez votre nom complet *',
+                'label' => 'Votre nom complet *',
                 'help' => 'entre 5 et 70 caractères maximum',                
                 'constraints' => [
                     new NotBlank(['message' => 'Merci de renseigner votre nom complet']),
@@ -37,7 +37,7 @@ class ContactType extends AbstractType
             ])
 
             ->add('email', EmailType::class, [
-                'label' => 'Indiquez ici votre email  *',
+                'label' => 'Votre email  *',
                 'constraints' => [
                     new NotBlank(['message' => 'Merci de renseigner votre adresse email']),
                     new Email(['message' => 'L\'adresse email {{ value }} n\'est pas une adresse valide']),
@@ -45,7 +45,7 @@ class ContactType extends AbstractType
             ])
 
             ->add('phone', TelType::class, [
-                'label' => 'Indiquez votre numéro de téléphone (optionnel)',
+                'label' => 'Votre numéro de téléphone (optionnel)',
                 'constraints' => [
                     new Regex([
                         'pattern' => "/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/",
@@ -56,7 +56,7 @@ class ContactType extends AbstractType
 
             ->add('message', TextareaType::class, [
                 'attr' => ['rows' => 8, 'maxlength' => 2000],
-                'label' => 'Indiquez ici le contenu de votre message *',
+                'label' => 'Le contenu de votre message *',
                 'help' => 'entre 10 et 2000 caractères maximum',
                 'constraints' => [
                     new NotBlank(['message' => 'Ce champ doit contenir votre message']),

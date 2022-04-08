@@ -3,19 +3,21 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
+<div class="container-lg">
+    <div class="row">
+        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded p-4 mt-4">	
 
-	<div class="container-md">
+			<h1 class="h2 text-title-h1 text-center mt-1">Contactez-nous</h1>
 
-		<h1 class="h2 text-title-h1 text-center mt-4">Contactez-nous</h1>
+			{{ form_start(form) }}
 
-		{{ form_start(form) }}
+			    {{ form_widget(form) }}
 
-		    {{ form_widget(form) }}
-
-		    <button class="btn btn-outline-info w-100 my-4">Envoyer mon message</button>
-		    
-		{{ form_end(form) }}
+			    <button class="btn btn-outline-info w-100 my-4">Envoyer mon message</button>
+			    
+			{{ form_end(form) }}
 		
+		</div>
 	</div>
-
+</div>
 {% endblock %}	

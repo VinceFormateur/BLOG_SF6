@@ -15,6 +15,7 @@ class Comment
     #[ORM\Column(type: 'integer')]
     private $id;
 
+
     #[Assert\NotBlank (message: 'Ce commentaire est vide !')]
     #[Assert\Length(
         min: 10,
@@ -22,22 +23,28 @@ class Comment
         minMessage: 'Le commentaire doit comporter au moins {{ limit }} caractères',
         maxMessage: 'Le commentaire ne doit pas dépasser {{ limit }} caractères',
     )]    
-    #[ORM\Column(type: 'text')]
+    #[Assert\Type('string')]  
+    #[ORM\Column(type: 'text')]    
     private $content;
+
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
+
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
+
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]  
     #[ORM\JoinColumn(nullable: false)]    
     private $post;
 
+
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private $author;
+
 
     public function getId(): ?int
     {
@@ -49,7 +56,7 @@ class Comment
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
