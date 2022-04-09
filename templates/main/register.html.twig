@@ -2,22 +2,47 @@
 
 {% block title %}Inscription{% endblock %}
 
+{% block stylesheets %}
+     {# inclus le block CSS commun #}
+     {{ parent() }}
+     {# Insertion du fichier JS dans le block stylesheets #}
+     {# La documentation de Recaptcha préconise en effet d'intégrer ce fichier JS dans le head #}
+     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}      
+
 {% block body %}
 <div class="container-lg">
     <div class="row mt-4">
-        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded p-4 my-5">
+        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded px-2 px-lg-5 py-2 my-4">
 
-            <h1 class="h2 col-12 text-title-h1 text-center mb-5">Inscription</h1>
+            <h1 class="h2 col-12 text-title-h1 text-center mb-4">Inscription</h1>
 
             {{ form_start(registrationForm) }}
-                
-                {{ form_widget(registrationForm) }}
 
-                <button type="submit" class="btn btn-outline-info w-100 my-4">S'incrire</button>
+                {{ form_row(registrationForm.email) }}
+
+                {{ form_row(registrationForm.username) }}
+
+                {{ form_row(registrationForm.plainPassword) }}
+
+                {# Affichage du recaptcha #}
+                <div id="container-g-recaptcha" class="row m-0 p-0">
+
+                    {# La clé publique est récupérée en paramètre dans le fichier config/packages/twig.yaml #}
+                    <div class="g-recaptcha col-6" data-sitekey="{{ google_recaptcha_site_key }}" data-theme="dark" data-size="normal"></div>
+
+                    <div class="col-6 pt-2">
+                        {# Affichage des erreurs générales du formulaire et donc du Google Recaptcha #}
+                        {{ form_errors(registrationForm) }}                         
+                    </div>
+
+                </div>  
+
+                <button type="submit" class="btn btn-outline-info w-100 mb-4">S'incrire</button>
 
             {{ form_end(registrationForm) }}
 
-            <a href="{{ path('app_main_login') }}" class="btn w-100 btn-outline-light w-100">Annuler</a>  
+            <a href="{{ path('app_main_login') }}" class="btn w-100 btn-outline-light w-100 mb-4">Annuler</a>  
         </div>          
     </div> 
 
