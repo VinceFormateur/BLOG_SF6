@@ -13,22 +13,39 @@
 {% block body %}
 <div class="container-lg">
     <div class="row">
-        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded p-4 mt-4">	
+        <div class="col-12 col-lg-8 offset-lg-2 bg-post border border-dark rounded px-2 px-lg-5 py-2 my-3">	
 
 			<h1 class="h2 text-title-h1 text-center mt-1">Contactez-nous</h1>
 
 			{{ form_start(form) }}
 
-			    {{ form_widget(form) }}
+				{# Affichage du champ Fullname #}
+			    {{ form_row(form.fullname) }}
+
+			    {# Affichage du champ eMail #}
+			    {{ form_row(form.email) }}
+
+			    {# Affichage du champ Phone #}
+			    {{ form_row(form.phone) }}
+
+				{# Affichage du champ Message #}
+			    {{ form_row(form.message) }}
 
                 {# Affichage du recaptcha #}
-                <div class="mb-3">
-                    {# La clé publique est récupérée en paramètre dans le fichier config/packages/twig.yaml #}
-                    <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}" data-theme="dark" data-size="normal"></div>
-                </div>			    
+                <div id="container-g-recaptcha" class="row m-0 p-0">
 
-			    <button class="btn btn-outline-info w-100 my-4">Envoyer mon message</button>
-			    
+                    {# La clé publique est récupérée en paramètre dans le fichier config/packages/twig.yaml #}
+                    <div class="g-recaptcha col-6" data-sitekey="{{ google_recaptcha_site_key }}" data-theme="dark" data-size="normal"></div>
+
+                	<div class="col-6 pt-2">
+						{# Affichage des erreurs générales du formulaire et donc du Google Recaptcha #}
+						{{ form_errors(form) }}                 		
+                	</div>
+
+                </div>				    
+
+			    <button class="btn btn-outline-info w-100 mt-0 mb-4">Envoyer mon message</button>		    
+	    
 			{{ form_end(form) }}
 		
 		</div>

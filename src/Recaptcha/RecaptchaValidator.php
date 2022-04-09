@@ -2,24 +2,28 @@
 
 namespace App\Recaptcha;
 
+// Service ParameterBagInterface qui nous permettra d'accéder aux paramètres globaux du site
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-/*****  Service permettant de vérifier si un captcha est valide  *****/
+/*****  Service permettant de vérifier auprès de Google si un captcha est valide  *****/
+// Pour fonctionner, le service a besoin de la clé privée présente dans le fichier .env
 class RecaptchaValidator {
 
+    // Stockage du service ParameterBagInterface de Symfony pour accéder aux paramètres globaux du site
     private $params;
 
+    // Constructeur de la classe qui servira à demander le service ParameterBagInterface à Symfony et à hydrater $params avec ce dernier
     public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
     }
 
-
-    /****  Méthode qui renverra "true" si le captcha dont le code est passé en paramètre est valide, sinon false ****/
+    // Méthode servant à vérifier auprès de Google si le code captcha $recaptchaResponse et l'adresse IP $ip correspondent à un captcha correctement validé
+    // La méthode retournera TRUE si le captcha est correcte, sinon FALSE
     public function verify(string $recaptchaResponse, string $ip = null){
 
-        if(empty($recaptchaResponse)) {
-            return false;
+        if (empty($recaptchaResponse)) {
+            return FALSE;
         }
 
         $params = [
@@ -43,7 +47,7 @@ class RecaptchaValidator {
             $response = file_get_contents($url);
         }
 
-        if(empty($response) || is_null($response)){ return false; }
+        if (empty($response) || is_null($response)) { return FALSE; }
 
         return json_decode($response)->success;
     }
