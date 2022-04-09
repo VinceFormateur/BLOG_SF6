@@ -17,6 +17,9 @@ use App\Form\RegistrationFormType;
 use App\Form\ContactType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+// Import Google Recaptcha
+use App\Recaptcha\RecaptchaValidator;
+use Symfony\Component\Form\FormError;
 // PAGINATOR
 use Knp\Component\Pager\PaginatorInterface;
 // EMAIL
@@ -40,13 +43,28 @@ class MainController extends AbstractController
 
     /****  FORMULAIRE DE CONTACT  ****/
     #[Route(path: '/contact', name: 'contact')]
-    public function contact(Request $request, MailerInterface $mailer): Response
+    public function contact(Request $request, MailerInterface $mailer, RecaptchaValidator $recaptcha): Response
     {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-           
+        /****  Première vérification à la soummission du formulaire pour vérifier si le Google Recaptcha est correctement validé  ****/
+        if ($form->isSubmitted()) {
+
+            // Récupération de la réponse envoyée par le captcha dans le formulaire
+            $recaptchaResponse = $request->request->get('g-recaptcha-response', null);
+
+            // Si le captcha n'est pas valide, on crée une nouvelle erreur dans le formulaire
+            // $request->server->get('REMOTE_ADDR') -----> Adresse IP de l'utilisateur dont la méthode verify() a besoin
+            if ($recaptchaResponse == null || !$recaptcha->verify( $recaptchaResponse, $request->server->get('REMOTE_ADDR') )){
+
+                // Ajout d'une nouvelle erreur manuellement dans le formulaire
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
+
+            /****  Seconde vérification sur la validité des éléments du formulaire après vérification du Google Recaptcha  ****/
+            if( $form->isValid()) {
+
             // Récupération des données dans le formulaire sous-forme de tableau
             $contactFormData = $form->getData(); 
 
@@ -72,7 +90,8 @@ class MainController extends AbstractController
             $this->addFlash('success', 'Votre message a bien été envoyé');
 
             return $this->redirectToRoute('app_main_home');
-        }
+            }
+        }        
 
         return $this->renderForm('main/contact.html.twig', [
             'form' => $form]);
@@ -107,7 +126,8 @@ class MainController extends AbstractController
 
     /****  INSCRIPTION  ****/
     #[Route(path: '/inscription', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
+                             UserRepository $userRepository, RecaptchaValidator $recaptcha): Response
     {
         if ($this->getUser()) {
             $this->addFlash('warning', 'Vous êtes déjà inscrit');
@@ -118,21 +138,33 @@ class MainController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-            );
-            $userRepository->add($user);
-            $this->addFlash('success', 'Vous êtes bien inscrit');
+        if ($form->isSubmitted()) {
 
-            // do anything else you need here, like send an email
+            $recaptchaResponse = $request->request->get('g-recaptcha-response', null);
 
-            return $this->redirectToRoute('app_main_login');
-        }
+            if ($recaptchaResponse == null || !$recaptcha->verify( $recaptchaResponse, $request->server->get('REMOTE_ADDR') )){
+
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
+
+            if( $form->isValid()) {
+
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
+                );
+
+                $userRepository->add($user);
+                $this->addFlash('success', 'Vous êtes bien inscrit');
+
+                // do anything else you need here, like send an email
+
+                return $this->redirectToRoute('app_main_login');
+            }
+        }  
 
         return $this->renderForm('main/register.html.twig', [
             'registrationForm' => $form,

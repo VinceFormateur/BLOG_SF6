@@ -29,6 +29,8 @@ $border-radius-sm: 3px !default;
 /* MON SCSS */
 
 $post-bg: #172e49;
+$blog-primary: #ffb;
+$blog-secondary: #bff;
 
 body {
   font-size: 0.95rem!important;
@@ -125,6 +127,17 @@ label {
 .page-item .page-link:focus, .page-item .page-link.focus {
   box-shadow: none!important;
 }
+
+
+/*---------------------------- CAPTCHA  ---------------------------*/
+
+#container-g-recaptcha .g-recaptcha {
+    transform: scale(0.65)!important;
+    -webkit-transform: scale(0.65)!important;
+    transform-origin: 0 0!important;
+    -webkit-transform-origin: 0 0!important;
+    overflow:hidden /* contexte de formatage */
+} 
 
 /*---------------------------- CKEDITOR  ---------------------------*/
 

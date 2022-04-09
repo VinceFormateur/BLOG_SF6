@@ -45,7 +45,7 @@ class RegistrationFormType extends AbstractType
                                      'help' => 'Répétez ici votre mot de passe',],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'le mot de passe est obligatoire',
+                        'message' => 'Le mot de passe est obligatoire',
                     ]),
                     new Length([
                         'min' => 8,

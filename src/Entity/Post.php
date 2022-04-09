@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 // Import de la logique des SLUG
 use Gedmo\Mapping\Annotation as Gedmo;
 
+
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Post

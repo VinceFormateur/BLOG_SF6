@@ -5,9 +5,9 @@
 {% block body %}
 <div class="container-lg">
     <div class="row mt-5">
-        <div class="col-12 col-lg-6 offset-lg-3 bg-post border border-dark rounded p-4 my-5">
+        <div class="col-12 col-lg-6 offset-lg-3 bg-post border border-dark rounded px-2 px-lg-5 py-2 my-5">
 
-            <h1 class="h2 col-12 text-title-h1 text-center mb-5">Connexion</h1>
+            <h1 class="h2 col-12 text-title-h1 text-center my-4">Connexion</h1>
 
             <form method="post">
                 {% if error %}
@@ -44,7 +44,10 @@
 
             <a href="{{ path('app_main_home') }}" class="btn w-100 btn-outline-light w-100 mb-4">Annuler</a>  
 
-            <span class="mt-4">Pour vous inscrire : </span><a href="{{ path('app_main_register') }}" class="text-title-h1">cliquez-ici</a>
+            <div class="col-12 mb-4">
+                <p>Pour vous inscrire : <a href="{{ path('app_main_register') }}" class="text-title-h1">cliquez-ici</a></p>                
+            </div>
+
         </div>          
     </div> 
 </div>
