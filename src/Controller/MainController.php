@@ -91,13 +91,7 @@ class MainController extends AbstractController
 
             return $this->redirectToRoute('app_main_home');
             }
-            
         }        
-
-        if ($form->isSubmitted() && $form->isValid()) {
-           
-            
-        }
 
         return $this->renderForm('main/contact.html.twig', [
             'form' => $form]);
@@ -132,7 +126,8 @@ class MainController extends AbstractController
 
     /****  INSCRIPTION  ****/
     #[Route(path: '/inscription', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
+                             UserRepository $userRepository, RecaptchaValidator $recaptcha): Response
     {
         if ($this->getUser()) {
             $this->addFlash('warning', 'Vous êtes déjà inscrit');
@@ -143,21 +138,33 @@ class MainController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-            );
-            $userRepository->add($user);
-            $this->addFlash('success', 'Vous êtes bien inscrit');
+        if ($form->isSubmitted()) {
 
-            // do anything else you need here, like send an email
+            $recaptchaResponse = $request->request->get('g-recaptcha-response', null);
 
-            return $this->redirectToRoute('app_main_login');
-        }
+            if ($recaptchaResponse == null || !$recaptcha->verify( $recaptchaResponse, $request->server->get('REMOTE_ADDR') )){
+
+                $form->addError(new FormError('Le Captcha doit être validé !'));
+            }
+
+            if( $form->isValid()) {
+
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
+                );
+
+                $userRepository->add($user);
+                $this->addFlash('success', 'Vous êtes bien inscrit');
+
+                // do anything else you need here, like send an email
+
+                return $this->redirectToRoute('app_main_login');
+            }
+        }  
 
         return $this->renderForm('main/register.html.twig', [
             'registrationForm' => $form,
