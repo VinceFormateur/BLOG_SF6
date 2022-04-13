@@ -1,6 +1,10 @@
-# BLOG_WF3
+***
+
+# BLOG_SF6
 
 EXEMPLE DE STRUCTURE DE BLOG SUR SYMFONY 6 
+
+***
 
 ## Pour cloner le projet
 ```
@@ -18,6 +22,16 @@ symfony console doctrine:migrations:migrate
 symfony console doctrine:fixtures:load
 symfony console assets:install public
 ```
+
+## Les fixtures créent :
+   > - Un compte en rôle admin (email: a@a.fr, username: admin, password : Password1* )
+   > - Un compte en rôle blogger (email: b@b.fr, username: blogger, password : Password1* )
+   > - Un compte en rôle user (email: c@c.fr, username: user, password : Password1* )
+   > - 47 comptes utilisateurs (email aléatoire, username aléatoire, password : Password1* )
+   > - 100 publications
+   > - entre 0 et 20 commentaires par publication
+
+
 
 ### Webpack Encore (voir package.json)
 ```
@@ -43,4 +57,3 @@ composer require friendsofsymfony/ckeditor-bundle
 composer require exercise/htmlpurifier-bundle -> (voir une version compatible Symfony 6)
 composer require symfony/google-mailer (Uniquement pour le service GMail)
 ```
-
