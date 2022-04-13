@@ -5,7 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.site_name: '%env(SITE_NAME)%'                                     # Nom du site
-    app_home.post_number: '%env(HOME_POST_NUMBER)%'                       # Nombre de publications sur la page d'accueil    
+    app_home.post_number: '%env(HOME_POST_NUMBER)%'                       # Nombre de publications sur la page d'accueil
+    app_blog.post_number: '%env(BLOG_POST_NUMBER)%'                       # Nombre de publications paginées par page sur le blog                       
+    app_search.post_number: '%env(SEARCH_POST_NUMBER)%'                   # Nombre de publications paginées par page sur la recherche dans le blog    
     google_recaptcha.site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'         # Récupération de la clé publique Google Recaptcha depuis le fichier .env
     google_recaptcha.private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'   # Récupération de la clé privée Google Recaptcha depuis le fichier .env   
 

@@ -11,16 +11,15 @@ use App\Form\CommentType;
 // REPOSITORY
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
+// PAGINATOR
+use Knp\Component\Pager\PaginatorInterface;
+// CONTROLE DES ROLES
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-// PAGINATOR
-use Knp\Component\Pager\PaginatorInterface;
-// CONTROLE DES ROLES
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/blog', name: 'app_blog_')]
 class BlogController extends AbstractController
@@ -45,7 +44,7 @@ class BlogController extends AbstractController
         $posts_paginate = $paginator->paginate(
             $data, // Requête de récupération des publications 
             $requestedPage, // Numéro de la page demandée dans $request
-            4 // Nombre de publications par page
+            $this->getParameter('app_blog.post_number') // Nombre de publications par page (dans les paramètres)
         );
 
         return $this->render('blog/index.html.twig', [

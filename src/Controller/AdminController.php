@@ -3,42 +3,43 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Post;
+use App\Entity\Comment;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+// CONTROLE DES ROLES
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/admin', name: '')]
+#[Route('/admin', name: 'app_admin_')]
 class AdminController extends AbstractController
 {
-    #[Route('/', name: 'app_admin_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+
+    #[Route('/', name: 'home')]
+    public function home(PostRepository $postRepository): Response
+    {
+
+        return $this->render('admin/home.admin.html.twig', [
+            'Nb_Posts' => $postRepository->countNumberPosts(),
+            
+        ]);
+    }
+
+    /**********  USERS  ***********/
+    #[Route('/users', name: 'user_index')]
+    public function userIndex(UserRepository $userRepository): Response
     {
         return $this->render('admin/users/user.index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user);
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('admin/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}', name: 'app_admin_show', methods: ['GET'])]
     public function show(User $user): Response

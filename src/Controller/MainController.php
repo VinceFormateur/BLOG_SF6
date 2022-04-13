@@ -177,8 +177,10 @@ class MainController extends AbstractController
     {
         // Récupération du numéro de la page demangée
         $requestedPage = $request->query->getInt('page', 1);
+
         // Vérification que le numéro est positif
-        if ($requestedPage < 1) { throw new NotFoundHttpException(); }        
+        if ($requestedPage < 1) { throw new NotFoundHttpException(); } 
+
         // On récupère le contenu du champ de recherche
         $search = $request->query->get('search', '');
 
@@ -189,7 +191,7 @@ class MainController extends AbstractController
         $posts_paginate = $paginator->paginate(
             $posts, // Requête de récupération des publications 
             $requestedPage, // Numéro de la page demandée dans $request
-            4 // Nombre de publications par page
+            $this->getParameter('app_search.post_number') // Nombre de publications par page (dans les paramètres)
         );        
 
         // Réponse -> envoyer une page contenant les éléments à afficher

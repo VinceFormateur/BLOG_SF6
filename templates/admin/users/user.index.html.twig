@@ -1,4 +1,4 @@
-{% extends 'admin/admin.html.twig' %}
+{% extends 'admin/base.admin.html.twig' %}
 
 {% block titleAdmin %}Utilisateurs{% endblock %}
 
@@ -7,27 +7,24 @@
 <table class="table table-hover table-responsive-lg">
     <thead>
         <tr class="bg-dark text-title-h1">
-            <th>Email</th>
-            <th>Username</th>
+            <th>Nom d'utilisateur</th>        
+{#             <th>Email</th>
             <th>Roles</th>
             <th>CreatedAt</th>
-            <th>UpdatedAt</th>
-            <th>actions</th>
+            <th>UpdatedAt</th> #}
         </tr>
     </thead>
     <tbody>
     {% for user in users %}
-        <tr>
-            <td>{{ user.email }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            <td>
-                <a href="{{ path('app_admin_show', {'id': user.id}) }}">show</a>
-                <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
-            </td>
-        </tr>
+        <a href="{{ path('app_admin_show', {'id': user.id}) }}"><tr>user</tr></a>
+{#             <tr>
+                <td>{{ user.username }}</td>            
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>   #}          
+
     {% else %}
         <tr>
             <td colspan="9">no records found</td>

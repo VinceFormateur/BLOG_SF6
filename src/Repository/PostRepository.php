@@ -45,13 +45,23 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    // Count the total number of Posts
+    public function countNumberPosts(): ?int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult()   
+        ;     
+    }
+
     // Search Method in Post with Title and Content
     public function findBySearch(string $search): array
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.title LIKE :search')
             ->orWhere('p.content LIKE :search')
-            ->setParameter('search', '%'.$search.'%')
+            ->setParameter('search', '%'.addcslashes($search, '%_').'%')
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
