@@ -62,6 +62,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    // Count the total number of Users
+    public function countNumberUsers(): ?int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult()   
+        ;     
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

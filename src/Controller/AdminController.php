@@ -20,14 +20,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[Route('/admin', name: 'app_admin_')]
 class AdminController extends AbstractController
 {
+    // Injection des différents Repository directement par le Construct
+    private UserRepository $userRepo;
+    private PostRepository $postRepo;
+    private CommentRepository $commentRepo;
+
+    public function __construct(UserRepository $userRepository,
+                                PostRepository $postRepository,
+                                CommentRepository $commentRepository)
+    {
+        $this->userRepo = $userRepository;
+        $this->postRepo = $postRepository;
+        $this->commentRepo = $commentRepository;
+    }
 
     #[Route('/', name: 'home')]
-    public function home(PostRepository $postRepository): Response
+    public function home(): Response
     {
 
         return $this->render('admin/home.admin.html.twig', [
-            'Nb_Posts' => $postRepository->countNumberPosts(),
-            
+            'Nb_Users' => $this->userRepo->countNumberUsers(),
+            'Nb_Posts' => $this->postRepo->countNumberPosts(),
+            'Nb_Comments' => $this->commentRepo->countNumberComments(),
         ]);
     }
 
