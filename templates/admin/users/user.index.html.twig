@@ -5,32 +5,35 @@
 {% block admin %}
     
 <table class="table table-hover table-responsive-lg">
+
     <thead>
         <tr class="bg-dark text-title-h1">
             <th>Nom d'utilisateur</th>        
-{#             <th>Email</th>
-            <th>Roles</th>
+            <th>Email</th>
             <th>CreatedAt</th>
-            <th>UpdatedAt</th> #}
         </tr>
     </thead>
+
     <tbody>
     {% for user in users %}
-        <a href="{{ path('app_admin_show', {'id': user.id}) }}"><tr>user</tr></a>
-{#             <tr>
-                <td>{{ user.username }}</td>            
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>   #}          
-
+        <tr data-href="{{ path('app_admin_show', {'id': user.id}) }}">
+            <td class="
+            {% if user.roles|json_encode == ["ROLE_ADMIN","ROLE_USER"] %}
+                text-danger
+            {% else %}
+                text-info
+            {% endif %}
+            ">{{ user.username|upper }}</td>            
+            <td>{{ user.email }}</td>
+            <td>{{ user.createdAt|date('d/m/Y à H\\hi') }}</td>
+        </tr>             
     {% else %}
         <tr>
-            <td colspan="9">no records found</td>
+            <td colspan="9">Aucun Utilisateur</td>
         </tr>
     {% endfor %}
     </tbody>
+
 </table>
 
 {% endblock %}

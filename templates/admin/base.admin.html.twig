@@ -2,6 +2,18 @@
 
 {% block title %}ADMIN/{% block titleAdmin %}{% endblock %}{% endblock %}
 
+{# BLOCK CSS #}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('admin') }}
+{% endblock %}
+
+{# BLOCK JS #}
+{% block javascripts %}
+    {{ parent() }}  
+    {{ encore_entry_script_tags('admin') }}
+{% endblock %}
+
 {% block body %}
 
 {####  MENU D'ADMINISTRATION  ####}
@@ -35,7 +47,7 @@
 </nav>
 
 {####  BLOCK PRINCIPAL ADMINISTRATION  ####}
-<div class="container-fluid px-2 px-lg-5 mt-5">
+<div id="main-admin"class="container-fluid px-2 px-lg-5">
 
     {% block admin %}{% endblock %}
 

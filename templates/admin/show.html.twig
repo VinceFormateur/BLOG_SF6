@@ -1,8 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.admin.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block titleAdmin %}{{ user.username }}{% endblock %}
 
-{% block body %}
+{% block admin %}
+
     <h1>User</h1>
 
     <table class="table">
@@ -37,7 +38,7 @@
     {% endfor %}    
 
 
-    <a href="{{ path('app_admin_index') }}">back to list</a>
+    <a href="{{ path('app_admin_user_index') }}">back to list</a>
 
     <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
 
