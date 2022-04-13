@@ -4,7 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    google_recaptcha.private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'     # Récupération de la clé publique Google Recaptcha depuis le fichier .env   
+    app.site_name: '%env(SITE_NAME)%'                                     # Nom du site
+    app_home.post_number: '%env(HOME_POST_NUMBER)%'                       # Nombre de publications sur la page d'accueil    
+    google_recaptcha.site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'         # Récupération de la clé publique Google Recaptcha depuis le fichier .env
+    google_recaptcha.private_key: '%env(GOOGLE_RECAPTCHA_PRIVATE_KEY)%'   # Récupération de la clé privée Google Recaptcha depuis le fichier .env   
 
 services:
     # default configuration for services in *this* file

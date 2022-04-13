@@ -36,7 +36,7 @@ class MainController extends AbstractController
     public function home(PostRepository $postRepository): Response
     {
         return $this->render('main/home.html.twig', [
-            'posts' => $postRepository->findBy([], ['createdAt' => 'desc'], 5),
+            'posts' => $postRepository->findBy([], ['createdAt' => 'desc'], $this->getParameter('app_home.post_number')),
         ]);
     }
 

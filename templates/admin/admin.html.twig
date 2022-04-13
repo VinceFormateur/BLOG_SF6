@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}ADMIN/{% block titleAdmin %}{% endblock %}{% endblock %}
 
 {% block body %}
 
+{####  MENU D'ADMINISTRATION  ####}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0">
   <div class="container-lg">
 
-    <a class="navbar-brand text-light" href="#">Administration</a>
+    <a class="navbar-brand text-title-h1" href="#"><i class="fa-solid fa-gear pe-2"></i>Administration</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,13 +16,13 @@
     <div class="collapse navbar-collapse" id="adminNavbar">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Utilisateurs</a>
+          <a class="nav-link" href="#"><i class="fa-solid fa-users-gear pe-2"></i>Utilisateurs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Publications</a>
+          <a class="nav-link" href="#"><i class="fa-regular fa-paste pe-2"></i>Publications</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Commentaires</a>
+          <a class="nav-link" href="#"><i class="fa-regular fa-comments pe-2"></i>Commentaires</a>
         </li>      
       </ul>
 
@@ -33,39 +34,11 @@
   </div>
 </nav>
 
+{####  BLOCK PRINCIPAL ADMINISTRATION  ####}
 <div class="container-fluid px-2 px-lg-5 mt-5">
-    
-    <table class="table table-hover table-responsive-lg">
-        <thead>
-            <tr class="bg-dark text-title-h1">
-                <th>Email</th>
-                <th>Username</th>
-                <th>Roles</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.email }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_admin_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+    {% block admin %}{% endblock %}
 
 </div>
+
 {% endblock %}

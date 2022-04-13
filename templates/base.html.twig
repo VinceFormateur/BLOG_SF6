@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
 
-    <title>Mon BLOG - {% block title %}{% endblock %}</title>
+    <title>{{ site_name }} - {% block title %}{% endblock %}</title>
 
     {# BLOCK CSS #}
     {% block stylesheets %}
@@ -20,7 +20,7 @@
 
 <body class="d-flex flex-column h-100">
 
-    {# HEADER #}
+    {####  HEADER  ####}
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
@@ -39,11 +39,11 @@
                 <a class="nav-link" href="{{ path('app_blog_index') }}"><i class="fa-solid fa-lg fa-newspaper pe-2"></i>Blog</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_main_contact') }}"><i class="fa-solid fa-lg fa-envelope pe-2"></i>Contactez-nous</a>
+                <a class="nav-link" href="{{ path('app_main_contact') }}"><i class="fa-regular fa-lg fa-envelope pe-2"></i>Contactez-nous</a>
               </li>
               {% if is_granted('ROLE_BLOGGER') %}                   
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ path('app_blog_new_post') }}"><i class="fa-solid fa-lg fa-file-circle-plus pe-2"></i>Nouvelle publication</a>
+                  <a class="nav-link" href="{{ path('app_blog_new_post') }}"><i class="fa-solid fa-lg fa-file-pen pe-2"></i>Nouvelle publication</a>
                 </li>              
               {% endif %}
             </ul>
@@ -56,15 +56,20 @@
                   <li class="nav-item dropdown">
                       <a  class="nav-link dropdown-toggle text-capitalize" 
                           href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fa-solid fa-lg fa-user pe-2"></i>{{ app.user.username }}
+                          {% if is_granted('ROLE_ADMIN') %}
+                            <i class="fa-solid fa-lg fa-user-shield pe-2"></i>
+                          {% else %}
+                            <i class="fa-regular fa-lg fa-user pe-2"></i>
+                          {% endif %}
+                          {{ app.user.username }}
                       </a>
                       <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end mt-3" aria-labelledby="navbarDarkDropdownMenuLink">
                       {# Menu de l'interface d'administration #}
                       {% if is_granted('ROLE_ADMIN') %}   
-                        <li><a class="dropdown-item mb-2" href="{{ path('app_admin_index') }}"><i class="fa-solid fa-users pe-3"></i>Administration</a></li>
+                        <li><a class="dropdown-item mb-2" href="{{ path('app_admin_index') }}"><i class="fa-solid fa-lg fa-gears pe-3"></i>Administration</a></li>
                         <li><hr class="dropdown-divider"></li>  
                       {% endif %}                      
-                        <li><a class="dropdown-item mb-2" href="#"><i class="fa-solid fa-lg fa-house pe-3"></i>Mon profil</a></li>
+                        <li><a class="dropdown-item mb-2" href="#"><i class="fa-solid fa-lg fa-house-user pe-3"></i>Mon profil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ path('app_main_logout') }}"><i class="fas fa-lg fa-sign-out-alt pe-3"></i>Me déconnecter</a></li>
                       </ul>
@@ -87,7 +92,7 @@
       </nav>
     </header>
 
-    {# MAIN #}
+    {####  MAIN  ####}
     <main class="container-fluid flex-shrink-0">
         
       {# Container pour les messages flash #}
@@ -101,12 +106,12 @@
         </div>
       </div>
 
-      {# BLOCK PRINCIPAL #}
+      {####  BLOCK PRINCIPAL  ####}
       {% block body %}{% endblock %}
 
     </main>        
 
-    {# FOOTER #}
+    {####  FOOTER  ####}
     <footer class="footer mt-auto py-2 bg-dark">
       <div class="container">
         <span class="text-muted">Ceci est le footer</span>
