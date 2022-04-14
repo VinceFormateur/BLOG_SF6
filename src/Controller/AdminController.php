@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 // CONTROLE DES ROLES
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+// PAGINATOR
+use Knp\Component\Pager\PaginatorInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/admin', name: 'app_admin_')]
@@ -37,7 +39,6 @@ class AdminController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(): Response
     {
-
         return $this->render('admin/home.admin.html.twig', [
             'Nb_Users' => $this->userRepo->countNumberUsers(),
             'Nb_Posts' => $this->postRepo->countNumberPosts(),
@@ -47,10 +48,17 @@ class AdminController extends AbstractController
 
     /**********  USERS  ***********/
     #[Route('/users', name: 'user_index')]
-    public function userIndex(): Response
+    public function userIndex(Request $request, PaginatorInterface $paginator): Response
     {
+
+        $requestedPage = $request->query->getInt('page', 1);
+        if ($requestedPage < 1) { throw new NotFoundHttpException(); } 
+        $users = $this->userRepo->findBy([], ['username' => 'ASC']);
+
+        $users_paginate = $paginator->paginate( $users, $requestedPage, $this->getParameter('app_admin.user_number') );        
+
         return $this->render('admin/users/user.index.html.twig', [
-            'users' => $this->userRepo->findAll(),
+            'users' => $users_paginate,
         ]);
     }
 
@@ -58,7 +66,7 @@ class AdminController extends AbstractController
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('admin/show.html.twig', [
+        return $this->render('admin/users/user.show.html.twig', [
             'user' => $user,
         ]);
     }

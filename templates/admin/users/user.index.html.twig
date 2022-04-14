@@ -3,8 +3,14 @@
 {% block titleAdmin %}Utilisateurs{% endblock %}
 
 {% block admin %}
-    
-<table class="container-lg table table-hover table-responsive-lg text-center mt-2">
+<div class="container-lg">
+
+{# Affichage du nombre total (attribut apporté par knp_paginator) #}
+<div class="col-12 my-4 ps-5">
+    <p class="text-left text-muted text-title-h1">Nombre total d'utilisateurs de notre blog : {{ users.getTotalItemCount }}</p>
+</div>
+
+<table class="table table-hover table-responsive-lg text-center my-4">
 
     <thead>
         <tr class="bg-dark text-title-h1">
@@ -17,7 +23,7 @@
     <tbody>
     {% for user in users %}
 
-        {# On affiche pas le compte Admin connecté pour ne pas qu'il puisse modifier son compte par accident #}
+        {# On affiche pas le compte Admin connecté pour qu'il ne puisse pas modifier son compte par accident (uniquement dans profil) #}
         {% if app.user != user %}
         <tr data-href="{{ path('app_admin_show', {'id': user.id}) }}">
 
@@ -44,4 +50,15 @@
 
 </table>
 
+{# On affiche le menu de pagination #}
+<div class="row my-5">
+    <div class="col-12 text-center">
+        <div class="d-inline-block">
+            {{ knp_pagination_render(users) }}             
+        </div>
+    </div>            
+</div>        
+
+    
+</div>
 {% endblock %}
