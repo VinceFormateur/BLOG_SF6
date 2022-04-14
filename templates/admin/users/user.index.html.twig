@@ -4,29 +4,37 @@
 
 {% block admin %}
     
-<table class="table table-hover table-responsive-lg">
+<table class="container-lg table table-hover table-responsive-lg text-center mt-2">
 
     <thead>
         <tr class="bg-dark text-title-h1">
-            <th>Nom d'utilisateur</th>        
-            <th>Email</th>
-            <th>CreatedAt</th>
+            <th>NOM D'UTILISATEUR</th>        
+            <th>EMAIL</th>
+            <th>Inscrit depuis le ...</th>
         </tr>
     </thead>
 
     <tbody>
     {% for user in users %}
+
+        {# On affiche pas le compte Admin connecté pour ne pas qu'il puisse modifier son compte par accident #}
+        {% if app.user != user %}
         <tr data-href="{{ path('app_admin_show', {'id': user.id}) }}">
-            <td class="
-            {% if user.roles|json_encode == ["ROLE_ADMIN","ROLE_USER"] %}
-                text-danger
+
+            {#  Affichage du pseudonyme de l'utilisateur suivant son rôle #}
+            {% set user_role = user.getRoles %}
+            {% if "ROLE_ADMIN" in user_role %}
+                <td class="text-danger fw-bold"><i class="fa-solid fa-user-shield pe-2"></i>{{ user.username|upper }}</td>    
+            {% elseif "ROLE_BLOGGER" in user_role %}
+                <td class="text-success fw-bold"><i class="fa-solid fa-pen-clip pe-2"></i>{{ user.username|upper }}</td>
             {% else %}
-                text-info
-            {% endif %}
-            ">{{ user.username|upper }}</td>            
+                <td class="text-title-h2">{{ user.username|upper }}</td>
+            {% endif %}   
+
             <td>{{ user.email }}</td>
-            <td>{{ user.createdAt|date('d/m/Y à H\\hi') }}</td>
-        </tr>             
+            <td class="text-muted">{{ user.createdAt|format_datetime('full', 'short', locale='fr')|capitalize }}</td>
+        </tr>   
+        {% endif %}          
     {% else %}
         <tr>
             <td colspan="9">Aucun Utilisateur</td>

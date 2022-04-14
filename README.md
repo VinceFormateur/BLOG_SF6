@@ -56,4 +56,5 @@ composer require knplabs/knp-paginator-bundle
 composer require friendsofsymfony/ckeditor-bundle
 composer require exercise/htmlpurifier-bundle -> (voir une version compatible Symfony 6)
 composer require symfony/google-mailer (Uniquement pour le service GMail)
+composer require twig/intl-extra (Pour le formatage des dates)
 ```

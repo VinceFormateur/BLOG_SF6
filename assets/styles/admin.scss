@@ -1,10 +1,17 @@
 /* IMPORTS */
+$table-hover-bg-factor: .20;
+$table-hover-bg: rgba(#bff, $table-hover-bg-factor);
+
 @import "app.scss";
 
 /*----------------------------- ADMIN  -----------------------------*/
 
 #main-admin {
   padding: 40px 0 0!important;
+}
+
+#main-admin tr[data-href]:hover {
+  cursor: pointer;
 }
 
 .list-group-item {
