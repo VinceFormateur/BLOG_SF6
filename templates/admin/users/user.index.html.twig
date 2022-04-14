@@ -14,9 +14,15 @@
 
     <thead>
         <tr class="bg-dark text-title-h1">
-            <th>NOM D'UTILISATEUR</th>        
-            <th>EMAIL</th>
-            <th>Inscrit depuis le ...</th>
+            <th {% if users.isSorted('utilisateurs.username') %} class="sorted"{% endif %} >
+                {{ knp_pagination_sortable(users, 'NOM D\'UTILISATEUR', 'utilisateurs.username') }}
+            </th>        
+            <th {% if users.isSorted('utilisateurs.email') %} class="sorted"{% endif %} >
+                {{ knp_pagination_sortable(users, 'EMAIL', 'utilisateurs.email') }}
+            </th>
+            <th {% if users.isSorted('utilisateurs.createdAt') %} class="sorted"{% endif %} >
+                {{ knp_pagination_sortable(users, 'Inscrit depuis le ...', 'utilisateurs.createdAt') }}
+            </th>
         </tr>
     </thead>
 
@@ -39,8 +45,10 @@
 
             <td>{{ user.email }}</td>
             <td class="text-muted">{{ user.createdAt|format_datetime('full', 'short', locale='fr')|capitalize }}</td>
+
         </tr>   
-        {% endif %}          
+        {% endif %}
+        
     {% else %}
         <tr>
             <td colspan="9">Aucun Utilisateur</td>
@@ -51,7 +59,7 @@
 </table>
 
 {# On affiche le menu de pagination #}
-<div class="row my-5">
+<div class="row mt-5 mb-4">
     <div class="col-12 text-center">
         <div class="d-inline-block">
             {{ knp_pagination_render(users) }}             

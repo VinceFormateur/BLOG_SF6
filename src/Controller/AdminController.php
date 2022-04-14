@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/admin', name: 'app_admin_')]
+#[Route('/administration', name: 'app_admin_')]
 class AdminController extends AbstractController
 {
     // Injection des différents Repository directement par le Construct
@@ -47,15 +47,16 @@ class AdminController extends AbstractController
     }
 
     /**********  USERS  ***********/
-    #[Route('/users', name: 'user_index')]
+    #[Route('/utilisateurs', name: 'user_index')]
     public function userIndex(Request $request, PaginatorInterface $paginator): Response
     {
 
         $requestedPage = $request->query->getInt('page', 1);
         if ($requestedPage < 1) { throw new NotFoundHttpException(); } 
-        $users = $this->userRepo->findBy([], ['username' => 'ASC']);
 
-        $users_paginate = $paginator->paginate( $users, $requestedPage, $this->getParameter('app_admin.user_number') );        
+        $users_query = $this->userRepo->findAllOrderedQuery($this->getParameter('app_admin.user_number'));
+
+        $users_paginate = $paginator->paginate( $users_query, $requestedPage, $this->getParameter('app_admin.user_number') );        
 
         return $this->render('admin/users/user.index.html.twig', [
             'users' => $users_paginate,
@@ -63,7 +64,7 @@ class AdminController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/utilisateurs/{id}', name: 'show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('admin/users/user.show.html.twig', [
@@ -71,7 +72,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/utilisateurs/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -88,7 +89,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/utilisateurs/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {

@@ -10,6 +10,11 @@ $table-hover-bg: rgba(#bff, $table-hover-bg-factor);
   padding: 40px 0 0!important;
 }
 
+#main-admin thead th.sorted a, #main-admin thead th a.sortable {
+  text-decoration: none!important;
+  color: #ffb!important;
+}
+
 #main-admin tr[data-href]:hover {
   cursor: pointer;
 }
