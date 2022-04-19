@@ -14,13 +14,13 @@
 
     <thead>
         <tr class="bg-dark text-title-h1">
-            <th {% if users.isSorted('utilisateurs.username') %} class="sorted"{% endif %} >
+            <th {% if users.isSorted('utilisateurs.username') %} class="sorted" {% endif %}>
                 {{ knp_pagination_sortable(users, 'NOM D\'UTILISATEUR', 'utilisateurs.username') }}
             </th>        
-            <th {% if users.isSorted('utilisateurs.email') %} class="sorted"{% endif %} >
+            <th {% if users.isSorted('utilisateurs.email') %} class="sorted" {% endif %}>
                 {{ knp_pagination_sortable(users, 'EMAIL', 'utilisateurs.email') }}
             </th>
-            <th {% if users.isSorted('utilisateurs.createdAt') %} class="sorted"{% endif %} >
+            <th {% if users.isSorted('utilisateurs.createdAt') %} class="sorted" {% endif %}>
                 {{ knp_pagination_sortable(users, 'Inscrit depuis le ...', 'utilisateurs.createdAt') }}
             </th>
         </tr>
